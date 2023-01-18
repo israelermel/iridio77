@@ -1,18 +1,94 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.github.israelermel.iridio77</id>
-    <name>IntelliJ Platform Plugin iridio77</name>
-    <vendor>israelermel</vendor>
+    <name>Iridio77</name>
+    <vendor email="israelermel@gmail.com" url="https://www.israelermel.com.br">Israel Ermel</vendor>
+
+    <idea-version since-build="213.7172"/>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.android</depends>
+    <depends>com.intellij.modules.androidstudio</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.israelermel.iridio77.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.israelermel.iridio77.services.MyProjectService"/>
+        <projectConfigurable instance="com.github.israelermel.iridio77.settings.FilePropertiesSettings"/>
+        <projectService serviceImplementation="com.github.israelermel.iridio77.services.FilePropertiesService"/>
+        <projectService serviceImplementation="com.github.israelermel.iridio77.services.FontSizeService"/>
+        <projectService serviceImplementation="com.github.israelermel.iridio77.services.LayoutSizeService"/>
     </extensions>
 
-    <applicationListeners>
-        <listener class="com.github.israelermel.iridio77.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
+    <actions>
+        <action id="ToogleLayoutBoundsActionId"
+                class="com.github.israelermel.iridio77.actions.adb.ToogleLayoutBoundsAction"
+                text="_Enable/Disable Layout Bounds"
+                description="Enable/Disable layout bounds">
+        </action>
+
+        <action id="ToogleTalkBackActionId"
+                class="com.github.israelermel.iridio77.actions.adb.ToogleTalkBackAction"
+                text="_Enable/Disable Talkback"
+                description="Enable/Disable talkback">
+        </action>
+
+        <action id="ChangeFontSizeActionId"
+                class="com.github.israelermel.iridio77.actions.adb.ChangeFontSizeAction"
+                text="_Change Font Size"
+                description="Change font size">
+        </action>
+
+        <action id="ToogleAnimationsActionId"
+                class="com.github.israelermel.iridio77.actions.adb.ToogleAnimationsAction"
+                text="_Enable/Disable Animations"
+                description="Enable/Disable animations">
+        </action>
+
+        <action id="ResizeSizeLayoutActionId"
+                class="com.github.israelermel.iridio77.actions.adb.ResizeSizeLayoutAction"
+                text="_Change Density"
+                description="Change Density emulator/device">
+        </action>
+
+        <action id="ToogleProfileActionId"
+                class="com.github.israelermel.iridio77.actions.adb.ToogleProfileAction"
+                text="_Enable/Disable Profile"
+                description="Enable/Disable profile">
+        </action>
+
+        <action id="ToogleOverdrawActionId"
+                class="com.github.israelermel.iridio77.actions.adb.ToogleOverdrawAction"
+                text="_Enable/Disable Overdraw"
+                description="Enable/Disable overdraw">
+        </action>
+
+        <!--        TOPMENU GROUP  -->
+        <group id="IridioActions.TopMenu"
+               text="Iridio77"
+               description="Iridio77">
+            <add-to-group group-id="MainMenu" anchor="last"/>
+        </group>
+
+        <!--        GROUPS ACTIONS  -->
+        <group id="GroupedAdbActions"
+               text="Developer Options"
+               popup="true">
+            <add-to-group group-id="IridioActions.TopMenu" anchor="first"/>
+
+            <reference ref="ResizeSizeLayoutActionId"/>
+            <reference ref="ChangeFontSizeActionId"/>
+            <separator text="Performance"/>
+            <reference ref="ToogleLayoutBoundsActionId"/>
+            <reference ref="ToogleProfileActionId"/>
+            <reference ref="ToogleOverdrawActionId"/>
+            <separator/>
+            <reference ref="ToogleAnimationsActionId"/>
+        </group>
+
+        <group
+                id="GroupedAccessibilityActions"
+                text="_Accessibility"
+                popup="true">
+            <add-to-group group-id="IridioActions.TopMenu" anchor="first"/>
+            <reference ref="ToogleTalkBackActionId"/>
+        </group>
+    </actions>
 </idea-plugin>
