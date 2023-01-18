@@ -3,6 +3,7 @@ package com.github.israelermel.iridio77.actions.adb
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.MultiLineReceiver
 import com.android.ddmlib.NullOutputReceiver
+import com.github.israelermel.iridio77.extensions.showNotification
 import com.intellij.notification.NotificationDisplayType
 import com.intellij.notification.NotificationGroup
 import com.intellij.notification.NotificationType
@@ -26,16 +27,6 @@ class ToogleLayoutBoundsAction : AnAction() {
         } ?: kotlin.run {
             event.project?.showNotification("${devices?.size} device(s) connected")
         }
-    }
-
-    private fun Project.showNotification(msg: String) {
-        NotificationGroup("someId", NotificationDisplayType.BALLOON)
-            .createNotification(
-                "Iridio77",
-                msg,
-                NotificationType.WARNING,
-                null
-            ).notify(this)
     }
 }
 

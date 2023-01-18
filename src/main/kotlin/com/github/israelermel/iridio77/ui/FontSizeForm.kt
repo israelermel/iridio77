@@ -7,7 +7,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.layout.panel
-import org.jetbrains.kotlin.idea.search.ifTrue
+import org.jetbrains.kotlin.idea.util.ifTrue
 import java.awt.Dimension
 import javax.swing.JComponent
 

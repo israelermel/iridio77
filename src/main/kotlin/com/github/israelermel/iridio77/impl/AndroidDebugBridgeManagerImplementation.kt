@@ -11,15 +11,10 @@ interface AndroidDebugBridgeManagerImplementation {
     fun executeEvent(event: AndroidDebugEvent, device: IDevice)
     fun toggleLayoutBounds(device: IDevice)
     fun toggleTalkback(device: IDevice)
-    fun togoleOverdraw(device: IDevice)
+    fun toogleOverdraw(device: IDevice)
     fun changeFontSize(command: Command)
     fun toogleAnimations(device: IDevice)
     fun toogleProfile(device: IDevice)
     fun resizeLayoutDensity(layoutSizes: LayoutSizes)
-    fun toggleOverdrawAreas(isEnabled: Boolean, device: IDevice)
-
     fun exeucteEventListener(execute: (device: IDevice) -> Unit)
-
-    fun isGradleSyncExecution(): Boolean
-
 }

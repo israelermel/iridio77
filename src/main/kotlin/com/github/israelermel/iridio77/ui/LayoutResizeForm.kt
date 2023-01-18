@@ -1,17 +1,15 @@
 package com.github.israelermel.iridio77.ui
 
 import com.android.ddmlib.MultiLineReceiver
+import com.github.israelermel.iridio77.extensions.showNotification
 import com.github.israelermel.iridio77.services.LayoutSizeService
 import com.github.israelermel.iridio77.ui.models.LayoutSizes
-import com.intellij.notification.NotificationDisplayType
-import com.intellij.notification.NotificationGroup
-import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.layout.panel
 import org.jetbrains.android.sdk.AndroidSdkUtils
-import org.jetbrains.kotlin.idea.search.ifTrue
+import org.jetbrains.kotlin.idea.util.ifTrue
 import java.awt.Dimension
 import javax.swing.JComponent
 
@@ -100,12 +98,6 @@ class LayoutResizeForm(
                 cancelled = true
             }
         }
-    }
-
-    private fun Project.showNotification(msg: String) {
-        NotificationGroup("someId", NotificationDisplayType.BALLOON).createNotification(
-            "Iridio77", msg, NotificationType.WARNING, null
-        ).notify(this)
     }
 
     override fun createCenterPanel(): JComponent = panel {

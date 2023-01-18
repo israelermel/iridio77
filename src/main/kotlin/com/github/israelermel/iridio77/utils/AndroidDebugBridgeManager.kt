@@ -3,10 +3,11 @@ package com.github.israelermel.iridio77.utils
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.MultiLineReceiver
 import com.android.ddmlib.NullOutputReceiver
-import com.android.tools.idea.gradle.project.sync.GradleSyncState
 import com.github.israelermel.iridio77.IridioBundle
 import com.github.israelermel.iridio77.actions.adb.SingleLineLayoutBoundsReceiver
 import com.github.israelermel.iridio77.extensions.doubleIsEnable
+import com.github.israelermel.iridio77.extensions.showNotification
+import com.github.israelermel.iridio77.extensions.showNotificationError
 import com.github.israelermel.iridio77.extensions.toEnableOrDisable
 import com.github.israelermel.iridio77.impl.AndroidDebugBridgeManagerImplementation
 import com.github.israelermel.iridio77.models.AndroidDebugEvent
@@ -24,8 +25,6 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
     private val DISABLE_TALKBACK =
         "settings put secure enabled_accessibility_services com.android.talkback/com.google.android.marvin.talkback.TalkBackService"
 
-    private val notificationsManager: IdeaNotificationsManager by lazy { IdeaNotificationsManager(project) }
-
     private val msgNoDeviceFound by lazy { getMessageResource("msgNoDeviceFound") }
 
     // MESSAGES
@@ -36,23 +35,12 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
     private val MSG_ADB_LAYOUT_BOUNDS = "msgAdbLayoutBounds"
     private val MSG_ADB_FONT_SIZE = "msgAdbFontSize"
     private val MSG_ADB_DENSITY = "msgAdbDensity"
-
-    companion object {
-        private const val ADB_GRADLE_SYNC = "Couldn't determine if a gradle sync is in progress"
-        private const val GRADLE_SYNC_IN_PROGRESS =
-            "Gradle Sync In Progress .. Can't Submit Action While Sync Execution"
-        private const val ADB_TITLE = "ADB Events"
-    }
+    private val ADB_TITLE = "ADB Events"
 
     override fun onDebugEventTriggered(event: AndroidDebugEvent) {
         val connectedDevices = AndroidSdkUtils.getDebugBridge(project)?.devices
         if (connectedDevices.isNullOrEmpty()) {
-            notificationsManager.showNotification(ADB_TITLE, msgNoDeviceFound)
-            return
-        }
-
-        if (isGradleSyncExecution()) {
-            notificationsManager.showNotification(ADB_TITLE, GRADLE_SYNC_IN_PROGRESS)
+            project.showNotification(msgNoDeviceFound, ADB_TITLE)
             return
         }
 
@@ -64,12 +52,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
     override fun exeucteEventListener(execute: (device: IDevice) -> Unit) {
         val connectedDevices = AndroidSdkUtils.getDebugBridge(project)?.devices
         if (connectedDevices.isNullOrEmpty()) {
-            notificationsManager.showNotification(ADB_TITLE, msgNoDeviceFound)
-            return
-        }
-
-        if (isGradleSyncExecution()) {
-            notificationsManager.showNotification(ADB_TITLE, GRADLE_SYNC_IN_PROGRESS)
+            project.showNotification(msgNoDeviceFound, ADB_TITLE)
             return
         }
 
@@ -84,31 +67,8 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
             AndroidDebugEvent.TOOGLE_TALKBACK -> toggleTalkback(device)
             AndroidDebugEvent.TOOGLE_ANIMATIONS -> toogleAnimations(device)
             AndroidDebugEvent.TOOGLE_PROFILE -> toogleProfile(device)
-            AndroidDebugEvent.TOOGLE_OVERDRAW -> togoleOverdraw(device)
+            AndroidDebugEvent.TOOGLE_OVERDRAW -> toogleOverdraw(device)
         }
-    }
-
-    override fun toggleOverdrawAreas(isEnabled: Boolean, device: IDevice) {
-        when (isEnabled) {
-            true -> device.executeShellCommand("setprop debug.hwui.overdraw show", NullOutputReceiver())
-            false -> device.executeShellCommand("setprop debug.hwui.overdraw false", NullOutputReceiver())
-        }
-    }
-
-    override fun isGradleSyncExecution(): Boolean {
-        return try {
-            GradleSyncState.getInstance(project).isSyncInProgress
-        } catch (t: Throwable) {
-            notificationsManager.showNotification(ADB_TITLE, ADB_GRADLE_SYNC)
-            false
-        }
-    }
-
-    private fun notification(msg: String) {
-        notificationsManager.showNotification(
-            ADB_TITLE,
-            msg
-        )
     }
 
     override fun toogleAnimations(device: IDevice) {
@@ -134,14 +94,11 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
                     }
                 })
         } catch (ex: Exception) {
-            notificationsManager.showNotification(
-                ADB_TITLE,
-                getErrorMessage(MSG_ADB_ANIMATIONS)
-            )
+            showAdbNotificationError(MSG_ADB_ANIMATIONS)
         }
     }
 
-    override fun togoleOverdraw(device: IDevice) {
+    override fun toogleOverdraw(device: IDevice) {
         try {
             device.executeShellCommand("getprop debug.hwui.overdraw",
                 SingleLineAdbReceiver { firstLine ->
@@ -166,10 +123,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
                     }
                 })
         } catch (ex: Exception) {
-            notificationsManager.showNotification(
-                ADB_TITLE,
-                getErrorMessage(MSG_ADB_OVERDRAW)
-            )
+            showAdbNotificationError(MSG_ADB_OVERDRAW)
         }
     }
 
@@ -200,10 +154,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
 
                 })
         } catch (ex: Exception) {
-            notificationsManager.showNotification(
-                ADB_TITLE,
-                getErrorMessage(MSG_ADB_PROFILE)
-            )
+            showAdbNotificationError(MSG_ADB_PROFILE)
         }
     }
 
@@ -226,10 +177,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
                     }
                 })
         } catch (ex: Exception) {
-            notificationsManager.showNotification(
-                ADB_TITLE,
-                getErrorMessage(MSG_ADB_TALKBACK)
-            )
+            showAdbNotificationError(MSG_ADB_TALKBACK)
         }
     }
 
@@ -244,10 +192,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
                 device.executeShellCommand("wm density ${layoutSizes.size}", NullOutputReceiver())
             }
         } catch (ex: Exception) {
-            notificationsManager.showNotification(
-                ADB_TITLE,
-                getErrorMessage(MSG_ADB_DENSITY)
-            )
+            showAdbNotificationError(MSG_ADB_DENSITY)
         }
     }
 
@@ -265,10 +210,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
                 )
             }
         } catch (ex: Exception) {
-            notificationsManager.showNotification(
-                ADB_TITLE,
-                getErrorMessage(MSG_ADB_FONT_SIZE)
-            )
+            showAdbNotificationError(MSG_ADB_FONT_SIZE)
         }
     }
 
@@ -344,6 +286,19 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
         return IridioBundle.message(
             "msgErrorChangeProperty",
             msgProperty
+        )
+    }
+
+    private fun showAdbNotificationError(property: String) {
+        project.showNotificationError(
+            getErrorMessage(property), ADB_TITLE
+        )
+    }
+
+    private fun notification(msg: String) {
+        project.showNotification(
+            msg,
+            ADB_TITLE
         )
     }
 
