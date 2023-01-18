@@ -1,6 +1,6 @@
-package org.jetbrains.plugins.template.services
+package com.github.israelermel.iridio77.services
 
-import org.jetbrains.plugins.template.MyBundle
+import com.github.israelermel.iridio77.MyBundle
 
 class MyApplicationService {
 
