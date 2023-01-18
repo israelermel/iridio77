@@ -1,6 +1,6 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.israelermel.iridio77</id>
+    <id>br.com.vineivel.Iridio77</id>
     <name>Iridio77</name>
     <vendor email="israelermel@gmail.com" url="https://www.israelermel.com.br">Israel Ermel</vendor>
 
