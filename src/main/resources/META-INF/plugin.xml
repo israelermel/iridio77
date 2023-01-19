@@ -8,7 +8,6 @@
 
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.android</depends>
-    <depends>com.intellij.modules.androidstudio</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <projectConfigurable instance="com.github.israelermel.iridio77.settings.FilePropertiesSettings"/>
