@@ -1,15 +1,16 @@
 package com.github.israelermel.iridio77.ui
 
 import com.android.ddmlib.MultiLineReceiver
+import com.github.israelermel.iridio77.IridioBundle
 import com.github.israelermel.iridio77.extensions.showNotification
 import com.github.israelermel.iridio77.services.LayoutSizeService
 import com.github.israelermel.iridio77.ui.models.LayoutSizes
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
-import com.intellij.ui.layout.panel
+import com.intellij.util.ui.FormBuilder
 import org.jetbrains.android.sdk.AndroidSdkUtils
-import org.jetbrains.kotlin.idea.util.ifTrue
+import org.jetbrains.kotlin.utils.addToStdlib.ifTrue
 import java.awt.Dimension
 import javax.swing.JComponent
 
@@ -19,11 +20,16 @@ class LayoutResizeForm(
     private val listener: (LayoutSizes) -> Unit
 ) : DialogWrapper(project) {
 
+    private lateinit var state: LayoutSizes
+    private lateinit var selectedLayoutSizes: LayoutSizes
+
     private var densityCombo: ComboBox<LayoutSizes> = ComboBox<LayoutSizes>().apply {
         name = "densityCombo"
+        title = IridioBundle.getMessage(
+            "titleDialogPanelChoose",
+            IridioBundle.getMessage("titleDensity")
+        )
     }
-
-    private var state: LayoutSizes
 
     private val densities = mutableListOf(
         LayoutSizes(label = "hdpi - 240dpi", size = (240 * 1.1).toInt(), index = 1),
@@ -32,36 +38,8 @@ class LayoutResizeForm(
         LayoutSizes(label = "xxxhdpi - 640dpi", size = (640 * 1.1).toInt(), index = 4)
     )
 
-    lateinit var selectedLayoutSizes: LayoutSizes
-
     init {
         init()
-
-        state = LayoutSizeService.getInstance(project).state
-
-        getDefaultDensity()?.let {
-            val first = LayoutSizes(label = "Default Density - ${it}dpi", size = it, index = 0)
-            densities.add(0, first)
-        }
-
-        with(densities) {
-            map { densityCombo.addItem(it) }
-
-            isNotEmpty().ifTrue {
-                if (state.label.isNullOrEmpty()) {
-                    densityCombo.selectedIndex = 0
-                } else {
-                    densityCombo.selectedIndex = densities.indexOf(state)
-                }
-            }
-        }
-
-        densityCombo.addActionListener {
-            val density = densityCombo.selectedItem as? LayoutSizes?
-            density?.let {
-                selectedLayoutSizes = it
-            }
-        }
     }
 
     override fun doOKAction() {
@@ -100,14 +78,44 @@ class LayoutResizeForm(
         }
     }
 
-    override fun createCenterPanel(): JComponent = panel {
-        row("Densities: ") {
-            densityCombo(grow)
-        }
+    override fun createCenterPanel(): JComponent {
+        setupComboBox()
 
-    }.apply {
-        minimumSize = Dimension(500, 200)
-        preferredSize = Dimension(500, 200)
+        val title = IridioBundle.getMessage("titleDensity")
+
+        return FormBuilder.createFormBuilder()
+            .addLabeledComponent(title, densityCombo)
+            .panel.apply {
+                minimumSize = Dimension(400, 100)
+                preferredSize = Dimension(400, 100)
+            }
     }
 
+    private fun setupComboBox() {
+        state = LayoutSizeService.getInstance(project).state
+
+        getDefaultDensity()?.let {
+            val first = LayoutSizes(label = "Default Density - ${it}dpi", size = it, index = 0)
+            densities.add(0, first)
+        }
+
+        with(densities) {
+            map { densityCombo.addItem(it) }
+
+            isNotEmpty().ifTrue {
+                if (state.label.isNullOrEmpty()) {
+                    densityCombo.selectedIndex = 0
+                } else {
+                    densityCombo.selectedIndex = densities.indexOf(state)
+                }
+            }
+        }
+
+        densityCombo.addActionListener {
+            val density = densityCombo.selectedItem as? LayoutSizes?
+            density?.let {
+                selectedLayoutSizes = it
+            }
+        }
+    }
 }

@@ -1,13 +1,13 @@
 package com.github.israelermel.iridio77.settings
 
+import com.github.israelermel.iridio77.IridioBundle
 import com.github.israelermel.iridio77.models.FilePropertiesState
 import com.github.israelermel.iridio77.services.FilePropertiesService
 import com.github.israelermel.iridio77.utils.IRFileUtils
 import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.project.Project
-import com.intellij.ui.layout.panel
+import com.intellij.ui.dsl.builder.text
 import javax.swing.JComponent
-import javax.swing.JPanel
 import javax.swing.JTextField
 import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
@@ -18,36 +18,35 @@ class FilePropertiesSettings(private val project: Project) : Configurable, Docum
 
     private val state: FilePropertiesState by lazy { FilePropertiesService.getInstance(project).state }
 
-    private val keyBuildType: JTextField = JTextField()
-    private val valueBuildType: JTextField = JTextField()
-    private val keySampleBuildFlavor: JTextField = JTextField()
-    private val valueSampleBuildFlavor: JTextField = JTextField()
-    private val panel: JPanel = panel() {
-        row("Chave BUILD_TYPE") { keyBuildType() }
-        row("Valor BUILD_TYPE") { valueBuildType() }
-
-        row("Chave SAMPLE_BUILD_FLAVOR") { keySampleBuildFlavor() }
-        row("Valor SAMPLE_BUILD_FLAVOR") { valueSampleBuildFlavor() }
-    }
+    private lateinit var keyBuildType: JTextField
+    private lateinit var valueBuildType: JTextField
+    private lateinit var keySampleBuildFlavor: JTextField
+    private lateinit var valueSampleBuildFlavor: JTextField
 
     override fun createComponent(): JComponent {
-        keyBuildType.apply {
-            text = state.keyBuildType
-            document.addDocumentListener(this@FilePropertiesSettings)
+        return com.intellij.ui.dsl.builder.panel {
+            row(IridioBundle.getMessage("settings.properties.key.first")) {
+                textField().text(state.keyBuildType).applyToComponent {
+                    document.addDocumentListener(this@FilePropertiesSettings)
+                }
+            }
+            row(IridioBundle.getMessage("settings.properties.value.first")) {
+                textField().text(state.valueBuildType).applyToComponent {
+                    document.addDocumentListener(this@FilePropertiesSettings)
+                }
+            }
+
+            row(IridioBundle.getMessage("settings.properties.key.second")) {
+                textField().text(state.keySampleBuildFlavor).applyToComponent {
+                    document.addDocumentListener(this@FilePropertiesSettings)
+                }
+            }
+            row(IridioBundle.getMessage("settings.properties.value.second")) {
+                textField().text(state.valueSampleBuildFlavor).applyToComponent {
+                    document.addDocumentListener(this@FilePropertiesSettings)
+                }
+            }
         }
-        valueBuildType.apply {
-            text = state.valueBuildType
-            document.addDocumentListener(this@FilePropertiesSettings)
-        }
-        keySampleBuildFlavor.apply {
-            text = state.keySampleBuildFlavor
-            document.addDocumentListener(this@FilePropertiesSettings)
-        }
-        valueSampleBuildFlavor.apply {
-            text = state.valueSampleBuildFlavor
-            document.addDocumentListener(this@FilePropertiesSettings)
-        }
-        return panel
     }
 
     override fun isModified(): Boolean = modified
@@ -66,7 +65,8 @@ class FilePropertiesSettings(private val project: Project) : Configurable, Docum
         modified = false
     }
 
-    override fun getDisplayName(): String = "Iridio77 Properties Settings"
+    override fun getDisplayName(): String = IridioBundle.getMessage("settings.properties.title")
+
     override fun insertUpdate(e: DocumentEvent?) {
         modified = true
     }

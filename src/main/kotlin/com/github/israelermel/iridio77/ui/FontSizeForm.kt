@@ -1,13 +1,14 @@
 package com.github.israelermel.iridio77.ui
 
+import com.github.israelermel.iridio77.IridioBundle
 import com.github.israelermel.iridio77.services.FontSizeService
 import com.github.israelermel.iridio77.ui.models.Command
 import com.github.israelermel.iridio77.ui.models.FontSizeCommand
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
-import com.intellij.ui.layout.panel
-import org.jetbrains.kotlin.idea.util.ifTrue
+import com.intellij.util.ui.FormBuilder
+import org.jetbrains.kotlin.utils.addToStdlib.ifTrue
 import java.awt.Dimension
 import javax.swing.JComponent
 
@@ -16,8 +17,16 @@ class FontSizeForm(
     private val listener: (Command) -> Unit
 ) : DialogWrapper(project) {
 
+    private lateinit var selectedFontSize: FontSizeCommand
+    private lateinit var state: FontSizeCommand
+
     private var fontSizeCombo: ComboBox<FontSizeCommand> = ComboBox<FontSizeCommand>().apply {
         name = "fontSizeCombo"
+        title = IridioBundle.getMessage(
+            "titleDialogPanelChoose",
+            IridioBundle.getMessage("titleFontSize")
+        )
+
     }
 
     private val fontSizes = arrayOf(
@@ -25,21 +34,17 @@ class FontSizeForm(
         FontSizeCommand(fontSize = 1.0, label = "Default 1.0"),
         FontSizeCommand(fontSize = 1.15, label = "Large 1.15"),
         FontSizeCommand(fontSize = 1.30, label = "Largest 1.30"),
-        FontSizeCommand(fontSize = 2.0, label = "Xlargest 2.0")
+        FontSizeCommand(fontSize = 2.0, label = "XLargest 2.0")
     )
-
-
-    lateinit var selectedFontSize: FontSizeCommand
-    private var state: FontSizeCommand
 
     init {
         init()
 
-        state = FontSizeService.getInstance(project).state
-        populateFontSizes()
     }
 
-    private fun populateFontSizes() {
+    private fun setupComboBox() {
+        state = FontSizeService.getInstance(project).state
+
         with(fontSizes) {
             map { fontSizeCombo.addItem(it) }
             isNotEmpty().ifTrue {
@@ -65,12 +70,16 @@ class FontSizeForm(
         super.doOKAction()
     }
 
-    override fun createCenterPanel(): JComponent = panel {
-        row("Font Size: ") {
-            fontSizeCombo(grow)
-        }
-    }.apply {
-        minimumSize = Dimension(500, 200)
-        preferredSize = Dimension(500, 200)
+    override fun createCenterPanel(): JComponent {
+        setupComboBox()
+
+        val title = IridioBundle.getMessage("titleFontSize")
+
+        return FormBuilder.createFormBuilder()
+            .addLabeledComponent(title, fontSizeCombo)
+            .panel.apply {
+                minimumSize = Dimension(400, 100)
+                preferredSize = Dimension(400, 100)
+            }
     }
 }
