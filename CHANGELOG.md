@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+## [0.0.5] - 2023-01-18
+### Added
+- Otimizado reuso das strings do projeto, usando Bundle ao invês de hardcode 
+- Novo menu para resetar todos os parametros para o Default
+- Novo menu para mostrar toques na tela 
+
+
 ## [0.0.4] - 2023-01-18
 
 ### Added

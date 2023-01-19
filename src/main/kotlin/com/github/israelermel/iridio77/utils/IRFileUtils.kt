@@ -1,7 +1,5 @@
 package com.github.israelermel.iridio77.utils
 
-import java.awt.Desktop
-import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.util.*
@@ -23,10 +21,5 @@ object IRFileUtils {
         val outputStream = FileOutputStream(filePath)
         properties.store(outputStream, null)
         outputStream.close()
-    }
-
-    fun openHtml(basePath: String) {
-        val htmlFile = File(basePath)
-        Desktop.getDesktop().browse(htmlFile.toURI())
     }
 }
