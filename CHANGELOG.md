@@ -4,12 +4,15 @@
 
 ## [Unreleased]
 
+## [0.0.6] - 2023-01-18
+### Added
+- Optimized reuse of project strings, using Bundle instead of hardcode
+- New menu to reset all parameters to Default
+- New menu to show screen touches
+
 ## [0.0.5] - 2023-01-18
 ### Added
-- Otimizado reuso das strings do projeto, usando Bundle ao invês de hardcode 
-- Novo menu para resetar todos os parametros para o Default
-- Novo menu para mostrar toques na tela 
-
+- Fix to aproval plugin on Jetbrains
 
 ## [0.0.4] - 2023-01-18
 

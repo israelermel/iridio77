@@ -6,7 +6,7 @@
 
 ## Description
 <!-- Plugin description -->
-This Plugin contém ADB commands to help developers to change Developer Options
+This Plugin has ADB commands to help developers to change Developer Options
 <!-- Plugin description end -->
 
 ## Installation

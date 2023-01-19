@@ -2,12 +2,15 @@
 <idea-plugin>
     <id>br.com.vineivel.Iridio77</id>
     <name>Iridio77</name>
-    <vendor email="israelermel@gmail.com" url="https://www.israelermel.com.br">Israel Ermel</vendor>
+    <vendor email="israelermel@gmail.com">Israel Ermel</vendor>
 
     <idea-version since-build="213.7172"/>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.android</depends>
+    <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.java</depends>
+    <depends>com.intellij.modules.androidstudio</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <projectConfigurable instance="com.github.israelermel.iridio77.settings.FilePropertiesSettings"/>
