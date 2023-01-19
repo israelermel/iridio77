@@ -13,7 +13,6 @@ interface AndroidDebugBridgeManagerImplementation {
     fun toggleTalkback(device: IDevice)
     fun toogleOverdraw(device: IDevice)
     fun changeFontSize(command: Command)
-    fun toogleAnimations(device: IDevice)
     fun toogleProfile(device: IDevice)
     fun resizeLayoutDensity(layoutSizes: LayoutSizes)
     fun exeucteEventListener(execute: (device: IDevice) -> Unit)

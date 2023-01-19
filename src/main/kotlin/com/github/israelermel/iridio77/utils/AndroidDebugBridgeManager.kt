@@ -3,11 +3,8 @@ package com.github.israelermel.iridio77.utils
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.MultiLineReceiver
 import com.android.ddmlib.NullOutputReceiver
-import com.github.israelermel.iridio77.IridioBundle
 import com.github.israelermel.iridio77.actions.adb.SingleLineLayoutBoundsReceiver
-import com.github.israelermel.iridio77.extensions.doubleIsEnable
-import com.github.israelermel.iridio77.extensions.showNotification
-import com.github.israelermel.iridio77.extensions.showNotificationError
+import com.github.israelermel.iridio77.adb.AdbAnimations
 import com.github.israelermel.iridio77.extensions.toEnableOrDisable
 import com.github.israelermel.iridio77.impl.AndroidDebugBridgeManagerImplementation
 import com.github.israelermel.iridio77.models.AndroidDebugEvent
@@ -20,27 +17,25 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
 
     private val DISABLE_OVERDRAW = "setprop debug.hwui.overdraw false"
     private val DISABLE_PROFILE = "setprop debug.hwui.profile false"
-    private val DISABLE_ANIMATIONS =
-        "settings put global window_animation_scale 0.0 ; settings put global animator_duration_scale 0.0 ; settings put global transition_animation_scale 0.0"
     private val DISABLE_TALKBACK =
         "settings put secure enabled_accessibility_services com.android.talkback/com.google.android.marvin.talkback.TalkBackService"
 
-    private val msgNoDeviceFound by lazy { getMessageResource("msgNoDeviceFound") }
+    private val notification by lazy { IridioNotification(project) }
+    private val msgNoDeviceFound by lazy { IridioMessage.getMessageResource("msgNoDeviceFound") }
+    private val adbAnimations by lazy { AdbAnimations(project, notification) }
 
     // MESSAGES
     private val MSG_ADB_TALKBACK = "msgAdbTalkback"
     private val MSG_ADB_PROFILE = "msgAdbProfile"
     private val MSG_ADB_OVERDRAW = "msgAdbOverdraw"
-    private val MSG_ADB_ANIMATIONS = "msgAdbAnimations"
     private val MSG_ADB_LAYOUT_BOUNDS = "msgAdbLayoutBounds"
     private val MSG_ADB_FONT_SIZE = "msgAdbFontSize"
     private val MSG_ADB_DENSITY = "msgAdbDensity"
-    private val ADB_TITLE = "ADB Events"
 
     override fun onDebugEventTriggered(event: AndroidDebugEvent) {
         val connectedDevices = AndroidSdkUtils.getDebugBridge(project)?.devices
         if (connectedDevices.isNullOrEmpty()) {
-            project.showNotification(msgNoDeviceFound, ADB_TITLE)
+            notification.adbNotification(msgNoDeviceFound)
             return
         }
 
@@ -52,7 +47,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
     override fun exeucteEventListener(execute: (device: IDevice) -> Unit) {
         val connectedDevices = AndroidSdkUtils.getDebugBridge(project)?.devices
         if (connectedDevices.isNullOrEmpty()) {
-            project.showNotification(msgNoDeviceFound, ADB_TITLE)
+            notification.adbNotification(msgNoDeviceFound)
             return
         }
 
@@ -65,36 +60,9 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
         when (event) {
             AndroidDebugEvent.SHOW_LAYOUT_BOUNDS -> toggleLayoutBounds(device)
             AndroidDebugEvent.TOOGLE_TALKBACK -> toggleTalkback(device)
-            AndroidDebugEvent.TOOGLE_ANIMATIONS -> toogleAnimations(device)
+            AndroidDebugEvent.TOOGLE_ANIMATIONS -> adbAnimations.execute(device)
             AndroidDebugEvent.TOOGLE_PROFILE -> toogleProfile(device)
             AndroidDebugEvent.TOOGLE_OVERDRAW -> toogleOverdraw(device)
-        }
-    }
-
-    override fun toogleAnimations(device: IDevice) {
-        try {
-            device.executeShellCommand("settings get global window_animation_scale",
-                SingleLineAdbReceiver { firstLine ->
-                    val isEnabled = firstLine.doubleIsEnable().not()
-
-                    getAdbPropertyMessageFromBoolean(MSG_ADB_ANIMATIONS, isEnabled).also {
-                        notification(it)
-                    }
-
-                    when (isEnabled) {
-                        true -> device.executeShellCommand(
-                            "settings put global window_animation_scale 1.0 ; settings put global animator_duration_scale 1.0 ; settings put global transition_animation_scale 1.0",
-                            NullOutputReceiver()
-                        )
-
-                        false -> device.executeShellCommand(
-                            DISABLE_ANIMATIONS,
-                            NullOutputReceiver()
-                        )
-                    }
-                })
-        } catch (ex: Exception) {
-            showAdbNotificationError(MSG_ADB_ANIMATIONS)
         }
     }
 
@@ -105,8 +73,8 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
                     val isEnabled = firstLine != "false"
 
                     with(isEnabled.not()) {
-                        getAdbPropertyMessageFromBoolean(MSG_ADB_OVERDRAW, this).also {
-                            notification(it)
+                        IridioMessage.getAdbPropertyMessageFromBoolean(MSG_ADB_OVERDRAW, this).also {
+                            notification.adbNotification(it)
                         }
 
                         when (this) {
@@ -123,7 +91,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
                     }
                 })
         } catch (ex: Exception) {
-            showAdbNotificationError(MSG_ADB_OVERDRAW)
+            notification.showAdbNotificationError(MSG_ADB_OVERDRAW)
         }
     }
 
@@ -135,8 +103,8 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
 
                     with(isEnabled.not()) {
 
-                        getAdbPropertyMessageFromBoolean(MSG_ADB_PROFILE, this).also {
-                            notification(it)
+                        IridioMessage.getAdbPropertyMessageFromBoolean(MSG_ADB_PROFILE, this).also {
+                            notification.adbNotification(it)
                         }
 
                         when (this) {
@@ -154,7 +122,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
 
                 })
         } catch (ex: Exception) {
-            showAdbNotificationError(MSG_ADB_PROFILE)
+            notification.showAdbNotificationError(MSG_ADB_PROFILE)
         }
     }
 
@@ -164,8 +132,8 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
                 SingleLineAdbReceiver { firstLine ->
 
                     val isEnabled = firstLine.toEnableOrDisable().not()
-                    val message = getAdbPropertyMessageFromBoolean(MSG_ADB_TALKBACK, isEnabled)
-                    notification(message)
+                    val message = IridioMessage.getAdbPropertyMessageFromBoolean(MSG_ADB_TALKBACK, isEnabled)
+                    notification.adbNotification(message)
 
                     when (isEnabled) {
                         true -> device.executeShellCommand(
@@ -177,30 +145,30 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
                     }
                 })
         } catch (ex: Exception) {
-            showAdbNotificationError(MSG_ADB_TALKBACK)
+            notification.showAdbNotificationError(MSG_ADB_TALKBACK)
         }
     }
 
     override fun resizeLayoutDensity(layoutSizes: LayoutSizes) {
         try {
 
-            getAdbChangePropertyMessage(MSG_ADB_DENSITY, layoutSizes.label.orEmpty()).also {
-                notification(it)
+            IridioMessage.getAdbChangePropertyMessage(MSG_ADB_DENSITY, layoutSizes.label.orEmpty()).also {
+                notification.adbNotification(it)
             }
 
             exeucteEventListener { device ->
                 device.executeShellCommand("wm density ${layoutSizes.size}", NullOutputReceiver())
             }
         } catch (ex: Exception) {
-            showAdbNotificationError(MSG_ADB_DENSITY)
+            notification.showAdbNotificationError(MSG_ADB_DENSITY)
         }
     }
 
     override fun changeFontSize(command: Command) {
         try {
 
-            getAdbChangePropertyMessage(MSG_ADB_FONT_SIZE, command.getCommand()).also {
-                notification(it)
+            IridioMessage.getAdbChangePropertyMessage(MSG_ADB_FONT_SIZE, command.getCommand()).also {
+                notification.adbNotification(it)
             }
 
             exeucteEventListener { device ->
@@ -210,7 +178,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
                 )
             }
         } catch (ex: Exception) {
-            showAdbNotificationError(MSG_ADB_FONT_SIZE)
+            notification.showAdbNotificationError(MSG_ADB_FONT_SIZE)
         }
     }
 
@@ -234,8 +202,8 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
             SingleLineLayoutBoundsReceiver { firstLine ->
                 val isEnabled = firstLine.toBoolean().not()
 
-                getAdbPropertyMessageFromBoolean(MSG_ADB_LAYOUT_BOUNDS, isEnabled).also {
-                    notification(it)
+                IridioMessage.getAdbPropertyMessageFromBoolean(MSG_ADB_LAYOUT_BOUNDS, isEnabled).also {
+                    notification.adbNotification(it)
                 }
 
                 when (isEnabled) {
@@ -250,55 +218,6 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
                     )
                 }
             }
-        )
-    }
-
-
-    private fun getMessageResource(property: String): String {
-        return IridioBundle.message(property)
-    }
-
-    private fun getLabelFromBoolean(status: Boolean) =
-        if (status) getMessageResource("msgEnabled") else getMessageResource("msgDisabled")
-
-    private fun getAdbPropertyMessageFromBoolean(property: String, isEnabled: Boolean): String {
-        val msgProperty = getMessageResource(property)
-
-        return IridioBundle.message(
-            "msgAdbProperty",
-            msgProperty,
-            getLabelFromBoolean(isEnabled)
-        )
-    }
-
-    private fun getAdbChangePropertyMessage(property: String, value: String): String {
-        val msgProperty = getMessageResource(property)
-
-        return IridioBundle.message(
-            "msgAdbChangeProperty",
-            msgProperty,
-            value
-        )
-    }
-
-    private fun getErrorMessage(property: String): String {
-        val msgProperty = getMessageResource(property)
-        return IridioBundle.message(
-            "msgErrorChangeProperty",
-            msgProperty
-        )
-    }
-
-    private fun showAdbNotificationError(property: String) {
-        project.showNotificationError(
-            getErrorMessage(property), ADB_TITLE
-        )
-    }
-
-    private fun notification(msg: String) {
-        project.showNotification(
-            msg,
-            ADB_TITLE
         )
     }
 
