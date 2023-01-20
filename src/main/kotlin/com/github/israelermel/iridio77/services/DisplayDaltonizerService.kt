@@ -12,12 +12,15 @@ import com.intellij.openapi.project.Project
 )
 class DisplayDaltonizerService : PersistentStateComponent<DisplayDaltonizerCommand> {
 
-    private var fontSizeState = DisplayDaltonizerCommand()
+    private var displayDaltonizerCommand = DisplayDaltonizerCommand()
 
-    override fun getState(): DisplayDaltonizerCommand = fontSizeState
+    override fun getState(): DisplayDaltonizerCommand = displayDaltonizerCommand
 
     override fun loadState(state: DisplayDaltonizerCommand) {
-        fontSizeState = state
+        displayDaltonizerCommand = state
+    }
+    fun clearData() {
+        displayDaltonizerCommand = DisplayDaltonizerCommand()
     }
 
     companion object {

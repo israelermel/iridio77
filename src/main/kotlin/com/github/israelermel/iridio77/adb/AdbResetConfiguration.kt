@@ -2,6 +2,9 @@ package com.github.israelermel.iridio77.adb
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver
+import com.github.israelermel.iridio77.services.DisplayDaltonizerService
+import com.github.israelermel.iridio77.services.FontSizeService
+import com.github.israelermel.iridio77.services.LayoutSizeService
 import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
 
@@ -12,6 +15,10 @@ class AdbResetConfiguration(val project: Project, val notification: IridioNotifi
             getAllCommands().forEach {
                 device.executeShellCommand(it, NullOutputReceiver())
             }
+
+            FontSizeService.getInstance(project).clearData()
+            DisplayDaltonizerService.getInstance(project).clearData()
+            LayoutSizeService.getInstance(project).clearData()
 
         } catch (ex: Exception) {
             notification.showAdbNotificationError(MSG_ADB_RESET_CONFIGURATION)

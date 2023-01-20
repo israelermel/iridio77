@@ -20,6 +20,10 @@ class FontSizeService : PersistentStateComponent<FontSizeCommand> {
         fontSizeState = state
     }
 
+    fun clearData() {
+        fontSizeState = FontSizeCommand()
+    }
+
     companion object {
         fun getInstance(project: Project): FontSizeService = project.service()
     }

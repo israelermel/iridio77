@@ -32,13 +32,13 @@
         </action>
         <action id="ChangeDisplayDaltonizerActionId"
                 class="com.github.israelermel.iridio77.actions.adb.ChangeDisplayDaltonizerAction"
-                text="_Display Daltonizer"
-                description="Display daltonizer">
+                text="_Change Display Daltonizer"
+                description="Change Display daltonizer">
         </action>
         <action id="ToogleColorInversionActionId"
                 class="com.github.israelermel.iridio77.actions.adb.ToogleColorInversionAction"
-                text="_Color Inversion"
-                description="Color inversion">
+                text="_Enable/Disable Color Inversion"
+                description="Enable/Disable Color inversion">
         </action>
 
         <!--        Developer Options     -->
