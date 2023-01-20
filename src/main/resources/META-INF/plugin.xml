@@ -10,7 +10,6 @@
     <depends>org.jetbrains.android</depends>
     <depends>com.intellij.modules.java</depends>
     <depends>com.intellij.java</depends>
-    <depends>com.intellij.modules.androidstudio</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <projectConfigurable instance="com.github.israelermel.iridio77.settings.FilePropertiesSettings"/>
@@ -18,21 +17,35 @@
         <projectService serviceImplementation="com.github.israelermel.iridio77.services.FontSizeService"/>
         <projectService serviceImplementation="com.github.israelermel.iridio77.services.LayoutSizeService"/>
 
-        <notificationGroup id="Custom Notification Group" displayType="BALLOON"  />
-        <notificationGroup id="Custom Notification Group Error" displayType="BALLOON"  />
+        <projectService serviceImplementation="com.github.israelermel.iridio77.services.DisplayDaltonizerService"/>
+
+        <notificationGroup id="Custom Notification Group" displayType="BALLOON"/>
+        <notificationGroup id="Custom Notification Group Error" displayType="BALLOON"/>
     </extensions>
 
     <actions>
-        <action id="ToogleLayoutBoundsActionId"
-                class="com.github.israelermel.iridio77.actions.adb.ToogleLayoutBoundsAction"
-                text="_Enable/Disable Layout Bounds"
-                description="Enable/Disable layout bounds">
-        </action>
-
+        <!--        Accessibility        -->
         <action id="ToogleTalkBackActionId"
                 class="com.github.israelermel.iridio77.actions.adb.ToogleTalkBackAction"
                 text="_Enable/Disable Talkback"
                 description="Enable/Disable talkback">
+        </action>
+        <action id="ChangeDisplayDaltonizerActionId"
+                class="com.github.israelermel.iridio77.actions.adb.ChangeDisplayDaltonizerAction"
+                text="_Display Daltonizer"
+                description="Display daltonizer">
+        </action>
+        <action id="ToogleColorInversionActionId"
+                class="com.github.israelermel.iridio77.actions.adb.ToogleColorInversionAction"
+                text="_Color Inversion"
+                description="Color inversion">
+        </action>
+
+        <!--        Developer Options     -->
+        <action id="ToogleLayoutBoundsActionId"
+                class="com.github.israelermel.iridio77.actions.adb.ToogleLayoutBoundsAction"
+                text="_Enable/Disable Layout Bounds"
+                description="Enable/Disable layout bounds">
         </action>
 
         <action id="ChangeFontSizeActionId"
@@ -48,9 +61,9 @@
         </action>
 
         <action id="ResizeSizeLayoutActionId"
-                class="com.github.israelermel.iridio77.actions.adb.ResizeSizeLayoutAction"
-                text="_Change Density"
-                description="Change Density emulator/device">
+                class="com.github.israelermel.iridio77.actions.adb.ChangeScreenDensityAction"
+                text="_Change Screen Density"
+                description="Change screen density emulator/device">
         </action>
 
         <action id="ToogleProfileActionId"
@@ -65,11 +78,26 @@
                 description="Enable/Disable overdraw">
         </action>
 
+        <action id="ChangeToDefaultConfigurationActionId"
+                class="com.github.israelermel.iridio77.actions.adb.ChangeResetConfigurationAction"
+                text="_Default Configuration"
+                description="Default configuration">
+        </action>
+
+        <action id="ToogleScreenTouchesActionId"
+                class="com.github.israelermel.iridio77.actions.adb.ToogleScreenTouchesAction"
+                text="_Enable/Disable Screen Touches"
+                description="Enable/Disable Screen touches">
+        </action>
+
         <!--        TOPMENU GROUP  -->
         <group id="IridioActions.TopMenu"
                text="Iridio77"
                description="Iridio77">
             <add-to-group group-id="MainMenu" anchor="last"/>
+
+            <separator/>
+            <reference ref="ChangeToDefaultConfigurationActionId"/>
         </group>
 
         <!--        GROUPS ACTIONS  -->
@@ -80,12 +108,13 @@
 
             <reference ref="ResizeSizeLayoutActionId"/>
             <reference ref="ChangeFontSizeActionId"/>
-            <separator text="Performance"/>
+            <separator/>
             <reference ref="ToogleLayoutBoundsActionId"/>
             <reference ref="ToogleProfileActionId"/>
             <reference ref="ToogleOverdrawActionId"/>
             <separator/>
             <reference ref="ToogleAnimationsActionId"/>
+            <reference ref="ToogleScreenTouchesActionId"/>
         </group>
 
         <group
@@ -94,6 +123,9 @@
                 popup="true">
             <add-to-group group-id="IridioActions.TopMenu" anchor="first"/>
             <reference ref="ToogleTalkBackActionId"/>
+            <reference ref="ChangeDisplayDaltonizerActionId"/>
+            <reference ref="ToogleColorInversionActionId"/>
         </group>
+
     </actions>
 </idea-plugin>
