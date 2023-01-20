@@ -21,6 +21,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
     private val adbOverdraw by lazy { AdbOverdraw(project, notification) }
     private val adbResetConfiguration by lazy { AdbResetConfiguration(project, notification) }
     private val adbDisplayDaltonizer by lazy { AdbDisplayDaltonizer(project, notification) }
+    private val adbColorInversion by lazy { AdbColorInversion(project, notification) }
 
     // MESSAGES
     private val MSG_ADB_FONT_SIZE = "msgAdbFontSize"
@@ -58,6 +59,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
             AndroidDebugEvent.TOOGLE_PROFILE -> adbProfile.execute(device)
             AndroidDebugEvent.TOOGLE_OVERDRAW -> adbOverdraw.execute(device)
             AndroidDebugEvent.RESET_CONFIGURATION -> adbResetConfiguration.execute(device)
+            AndroidDebugEvent.TOOGLE_COLOR_INVERSION -> adbColorInversion.execute(device)
         }
     }
 

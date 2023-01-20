@@ -7,4 +7,5 @@ enum class AndroidDebugEvent {
     TOOGLE_PROFILE,
     TOOGLE_OVERDRAW,
     RESET_CONFIGURATION,
+    TOOGLE_COLOR_INVERSION,
 }

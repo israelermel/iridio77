@@ -35,6 +35,11 @@
                 text="_Display Daltonizer"
                 description="Display daltonizer">
         </action>
+        <action id="ToogleColorInversionActionId"
+                class="com.github.israelermel.iridio77.actions.adb.ToogleColorInversionAction"
+                text="_Color Inversion"
+                description="Color inversion">
+        </action>
 
         <!--        Developer Options     -->
         <action id="ToogleLayoutBoundsActionId"
@@ -112,6 +117,7 @@
             <add-to-group group-id="IridioActions.TopMenu" anchor="first"/>
             <reference ref="ToogleTalkBackActionId"/>
             <reference ref="ChangeDisplayDaltonizerActionId"/>
+            <reference ref="ToogleColorInversionActionId"/>
         </group>
 
     </actions>
