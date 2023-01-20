@@ -3,7 +3,6 @@ package com.github.israelermel.iridio77.impl
 import com.android.ddmlib.IDevice
 import com.github.israelermel.iridio77.models.AndroidDebugEvent
 import com.github.israelermel.iridio77.ui.models.Command
-import com.github.israelermel.iridio77.ui.models.LayoutSizes
 
 interface AndroidDebugBridgeManagerImplementation {
 
@@ -11,6 +10,6 @@ interface AndroidDebugBridgeManagerImplementation {
     fun executeEvent(event: AndroidDebugEvent, device: IDevice)
     fun changeFontSize(command: Command)
     fun changeDisplayDaltonizer(command: Command)
-    fun resizeLayoutDensity(layoutSizes: LayoutSizes)
+    fun screenDensity(command: Command)
     fun executeEventListener(execute: (device: IDevice) -> Unit)
 }

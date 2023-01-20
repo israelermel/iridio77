@@ -1,12 +1,10 @@
 package com.github.israelermel.iridio77.utils
 
 import com.android.ddmlib.IDevice
-import com.android.ddmlib.NullOutputReceiver
 import com.github.israelermel.iridio77.adb.*
 import com.github.israelermel.iridio77.impl.AndroidDebugBridgeManagerImplementation
 import com.github.israelermel.iridio77.models.AndroidDebugEvent
 import com.github.israelermel.iridio77.ui.models.Command
-import com.github.israelermel.iridio77.ui.models.LayoutSizes
 import com.intellij.openapi.project.Project
 import org.jetbrains.android.sdk.AndroidSdkUtils
 
@@ -22,10 +20,8 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
     private val adbResetConfiguration by lazy { AdbResetConfiguration(project, notification) }
     private val adbDisplayDaltonizer by lazy { AdbDisplayDaltonizer(project, notification) }
     private val adbColorInversion by lazy { AdbColorInversion(project, notification) }
-
-    // MESSAGES
-    private val MSG_ADB_FONT_SIZE = "msgAdbFontSize"
-    private val MSG_ADB_DENSITY = "msgAdbDensity"
+    private val adbScreenDensity by lazy { AdbScreenDensity(project, notification) }
+    private val adbFontSize by lazy { AdbFontSize(project, notification) }
 
     override fun onDebugEventTriggered(event: AndroidDebugEvent) {
         val connectedDevices = AndroidSdkUtils.getDebugBridge(project)?.devices
@@ -63,35 +59,15 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
         }
     }
 
-    override fun resizeLayoutDensity(layoutSizes: LayoutSizes) {
-        try {
-
-            IridioMessage.getAdbChangePropertyMessage(MSG_ADB_DENSITY, layoutSizes.label.orEmpty()).also {
-                notification.adbNotification(it)
-            }
-
-            executeEventListener { device ->
-                device.executeShellCommand("wm density ${layoutSizes.size}", NullOutputReceiver())
-            }
-        } catch (ex: Exception) {
-            notification.showAdbNotificationError(MSG_ADB_DENSITY)
+    override fun screenDensity(command: Command) {
+        executeEventListener {
+            adbScreenDensity.execute(it, command)
         }
     }
 
     override fun changeFontSize(command: Command) {
-        try {
-            IridioMessage.getAdbChangePropertyMessage(MSG_ADB_FONT_SIZE, command.getCommand()).also {
-                notification.adbNotification(it)
-            }
-
-            executeEventListener { device ->
-                device.executeShellCommand(
-                    "settings put system font_scale ${command.getCommand()}",
-                    NullOutputReceiver()
-                )
-            }
-        } catch (ex: Exception) {
-            notification.showAdbNotificationError(MSG_ADB_FONT_SIZE)
+        executeEventListener {
+            adbFontSize.execute(it, command)
         }
     }
 

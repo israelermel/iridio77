@@ -30,7 +30,7 @@ class DisplayDaltonizerForm(
         }
 
     private val displayDaltonizerList = arrayOf(
-        DisplayDaltonizerCommand(code = -1, "Disable Daltonizer"),
+        DisplayDaltonizerCommand(code = -1, "Disabled Daltonizer"),
         DisplayDaltonizerCommand(code = 0, "Monochromatic"),
         DisplayDaltonizerCommand(code = 11, "Protanomaly"),
         DisplayDaltonizerCommand(code = 12, "Deuteranomaly"),

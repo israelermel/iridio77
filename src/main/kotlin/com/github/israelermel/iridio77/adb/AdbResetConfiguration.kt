@@ -25,7 +25,7 @@ class AdbResetConfiguration(val project: Project, val notification: IridioNotifi
             AdbProfile.DEFAULT_CONFIGURATION,
             AdbOverdraw.DEFAULT_CONFIGURATION,
             AdbLayoutBounds.DEFAULT_CONFIGURATION,
-            AdbDensity.DEFAULT_CONFIGURATION,
+            AdbScreenDensity.DEFAULT_CONFIGURATION,
             AdbFontSize.DEFAULT_CONFIGURATION,
             AdbColorInversion.DEFAULT_CONFIGURATION,
             AdbDisplayDaltonizer.DEFAULT_CONFIGURATION

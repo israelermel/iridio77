@@ -61,9 +61,9 @@
         </action>
 
         <action id="ResizeSizeLayoutActionId"
-                class="com.github.israelermel.iridio77.actions.adb.ResizeSizeLayoutAction"
-                text="_Change Density"
-                description="Change Density emulator/device">
+                class="com.github.israelermel.iridio77.actions.adb.ChangeScreenDensityAction"
+                text="_Change Screen Density"
+                description="Change screen density emulator/device">
         </action>
 
         <action id="ToogleProfileActionId"
@@ -79,7 +79,7 @@
         </action>
 
         <action id="ChangeToDefaultConfigurationActionId"
-                class="com.github.israelermel.iridio77.actions.adb.ChangeToResetConfigurationAction"
+                class="com.github.israelermel.iridio77.actions.adb.ChangeResetConfigurationAction"
                 text="_Default Configuration"
                 description="Default configuration">
         </action>

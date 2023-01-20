@@ -1,7 +1,7 @@
 package com.github.israelermel.iridio77.ui
 
 import com.github.israelermel.iridio77.IridioBundle
-import com.github.israelermel.iridio77.adb.AdbDensity
+import com.github.israelermel.iridio77.adb.AdbScreenDensity
 import com.github.israelermel.iridio77.services.LayoutSizeService
 import com.github.israelermel.iridio77.ui.models.LayoutSizes
 import com.github.israelermel.iridio77.utils.IridioNotification
@@ -14,7 +14,7 @@ import java.awt.Dimension
 import javax.swing.JComponent
 
 
-class LayoutResizeForm(
+class ScreenDensityForm(
     private val project: Project,
     private val listener: (LayoutSizes) -> Unit
 ) : DialogWrapper(project) {
@@ -23,7 +23,7 @@ class LayoutResizeForm(
     private lateinit var selectedLayoutSizes: LayoutSizes
 
     private val notification by lazy { IridioNotification(project) }
-    private val adbDensity by lazy { AdbDensity(project, notification) }
+    private val adbScreenDensity by lazy { AdbScreenDensity(project, notification) }
 
     private var densityCombo: ComboBox<LayoutSizes> = ComboBox<LayoutSizes>().apply {
         name = "densityCombo"
@@ -66,7 +66,7 @@ class LayoutResizeForm(
     private fun setupComboBox() {
         state = LayoutSizeService.getInstance(project).state
 
-        adbDensity.getDefaultDensity()?.let {
+        adbScreenDensity.getDefaultDensity()?.let {
             val first = LayoutSizes(label = "Default Density - ${it}dpi", size = it, index = 0)
             densities.add(0, first)
         }

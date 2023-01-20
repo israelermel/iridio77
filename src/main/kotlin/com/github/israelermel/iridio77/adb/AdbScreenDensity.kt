@@ -1,12 +1,30 @@
 package com.github.israelermel.iridio77.adb
 
+import com.android.ddmlib.IDevice
+import com.android.ddmlib.NullOutputReceiver
 import com.github.israelermel.iridio77.extensions.showNotification
+import com.github.israelermel.iridio77.ui.models.Command
+import com.github.israelermel.iridio77.utils.IridioMessage
 import com.github.israelermel.iridio77.utils.IridioNotification
 import com.github.israelermel.iridio77.utils.SingleLineLayoutSizeReceiver
 import com.intellij.openapi.project.Project
 import org.jetbrains.android.sdk.AndroidSdkUtils
 
-class AdbDensity(val project: Project, val notification: IridioNotification) {
+class AdbScreenDensity(val project: Project, val notification: IridioNotification) {
+
+    fun execute(device: IDevice, command: Command) {
+        try {
+
+            IridioMessage.getAdbChangePropertyMessage(MSG_ADB_SCREEN_DENSITY, command.getLabel()).also {
+                notification.adbNotification(it)
+            }
+
+            device.executeShellCommand("wm density ${command.getCommand()}", NullOutputReceiver())
+
+        } catch (ex: Exception) {
+            notification.showAdbNotificationError(MSG_ADB_SCREEN_DENSITY)
+        }
+    }
 
     fun getDefaultDensity(): Int? {
         val devices = project.let { AndroidSdkUtils.getDebugBridge(it)?.devices }
@@ -26,5 +44,6 @@ class AdbDensity(val project: Project, val notification: IridioNotification) {
 
     companion object {
         const val DEFAULT_CONFIGURATION = "wm density reset"
+        const val MSG_ADB_SCREEN_DENSITY = "msgAdbDensity"
     }
 }
