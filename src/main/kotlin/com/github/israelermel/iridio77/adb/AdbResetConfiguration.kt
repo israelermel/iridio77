@@ -26,12 +26,11 @@ class AdbResetConfiguration(val project: Project, val notification: IridioNotifi
             AdbOverdraw.DEFAULT_CONFIGURATION,
             AdbLayoutBounds.DEFAULT_CONFIGURATION,
             AdbDensity.DEFAULT_CONFIGURATION,
-            DEFAULT_CONFIGURATION_FONT_SIZE
+            AdbFontSize.DEFAULT_CONFIGURATION
         )
     }
 
     companion object {
         const val MSG_ADB_RESET_CONFIGURATION = "msg.error.adb.reset.configuration"
-        const val DEFAULT_CONFIGURATION_FONT_SIZE = "settings put system font_scale 1.0"
     }
 }

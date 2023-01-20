@@ -3,7 +3,7 @@ package com.github.israelermel.iridio77.adb
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver
 import com.github.israelermel.iridio77.extensions.toEnableOrDisable
-import com.github.israelermel.iridio77.utils.AndroidDebugBridgeManager
+import com.github.israelermel.iridio77.receivers.SingleLineAdbReceiver
 import com.github.israelermel.iridio77.utils.IridioMessage
 import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
@@ -13,7 +13,7 @@ class AdbTalkback(val project: Project, val notification: IridioNotification) {
     fun execute(device: IDevice) {
         try {
             device.executeShellCommand("settings get secure accessibility_enabled",
-                AndroidDebugBridgeManager.SingleLineAdbReceiver { firstLine ->
+                SingleLineAdbReceiver { firstLine ->
 
                     val isEnabled = firstLine.toEnableOrDisable().not()
                     val message = IridioMessage.getAdbPropertyMessageFromBoolean(MSG_ADB_TALKBACK, isEnabled)

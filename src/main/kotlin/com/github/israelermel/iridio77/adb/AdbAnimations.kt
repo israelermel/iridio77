@@ -3,7 +3,7 @@ package com.github.israelermel.iridio77.adb
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver
 import com.github.israelermel.iridio77.extensions.doubleIsEnable
-import com.github.israelermel.iridio77.utils.AndroidDebugBridgeManager
+import com.github.israelermel.iridio77.receivers.SingleLineAdbReceiver
 import com.github.israelermel.iridio77.utils.IridioMessage
 import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
@@ -13,7 +13,7 @@ class AdbAnimations(val project: Project, val notification: IridioNotification) 
     fun execute(device: IDevice) {
         try {
             device.executeShellCommand("settings get global window_animation_scale",
-                AndroidDebugBridgeManager.SingleLineAdbReceiver { firstLine ->
+                SingleLineAdbReceiver { firstLine ->
                     val isEnabled = firstLine.doubleIsEnable().not()
 
                     IridioMessage.getAdbPropertyMessageFromBoolean(MSG_ADB_ANIMATIONS, isEnabled).also {

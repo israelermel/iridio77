@@ -2,7 +2,7 @@ package com.github.israelermel.iridio77.adb
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver
-import com.github.israelermel.iridio77.utils.AndroidDebugBridgeManager
+import com.github.israelermel.iridio77.receivers.SingleLineAdbReceiver
 import com.github.israelermel.iridio77.utils.IridioMessage
 import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
@@ -12,7 +12,7 @@ class AdbProfile(val project: Project, val notification: IridioNotification) {
     fun execute(device: IDevice) {
         try {
             device.executeShellCommand("getprop debug.hwui.profile",
-                AndroidDebugBridgeManager.SingleLineAdbReceiver { firstLine ->
+                SingleLineAdbReceiver { firstLine ->
                     val isEnabled = firstLine != "false"
 
                     with(isEnabled.not()) {
