@@ -1,4 +1,4 @@
-package com.github.israelermel.iridio77.services
+package com.github.israelermel.iridio77.persistancestate
 
 import com.github.israelermel.iridio77.ui.models.LayoutSizes
 import com.intellij.openapi.components.*
@@ -10,7 +10,7 @@ import com.intellij.openapi.project.Project
         Storage(value = "layoutSizeConfiguration.xml")
     ]
 )
-class LayoutSizeService : PersistentStateComponent<LayoutSizes> {
+class LayoutSizePersistanceState : PersistentStateComponent<LayoutSizes> {
 
     private var layoutSizes = LayoutSizes()
 
@@ -25,6 +25,6 @@ class LayoutSizeService : PersistentStateComponent<LayoutSizes> {
     }
 
     companion object {
-        fun getInstance(project: Project): LayoutSizeService = project.service()
+        fun getInstance(project: Project): LayoutSizePersistanceState = project.service()
     }
 }

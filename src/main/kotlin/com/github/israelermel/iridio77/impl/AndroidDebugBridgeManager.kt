@@ -1,10 +1,10 @@
-package com.github.israelermel.iridio77.utils
+package com.github.israelermel.iridio77.impl
 
 import com.android.ddmlib.IDevice
-import com.github.israelermel.iridio77.adb.*
-import com.github.israelermel.iridio77.impl.AndroidDebugBridgeManagerImplementation
-import com.github.israelermel.iridio77.models.AndroidDebugEvent
+import com.github.israelermel.iridio77.models.*
 import com.github.israelermel.iridio77.ui.models.Command
+import com.github.israelermel.iridio77.utils.IridioMessage
+import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
 import org.jetbrains.android.sdk.AndroidSdkUtils
 

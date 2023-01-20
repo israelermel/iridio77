@@ -1,7 +1,7 @@
 package com.github.israelermel.iridio77.ui
 
 import com.github.israelermel.iridio77.IridioBundle
-import com.github.israelermel.iridio77.services.DisplayDaltonizerService
+import com.github.israelermel.iridio77.persistancestate.DisplayDaltonizerPersistanceState
 import com.github.israelermel.iridio77.ui.models.Command
 import com.github.israelermel.iridio77.ui.models.DisplayDaltonizerCommand
 import com.intellij.openapi.project.Project
@@ -43,7 +43,7 @@ class DisplayDaltonizerForm(
 
     override fun doOKAction() {
         listener.invoke(selectDisplayDaltonizer)
-        DisplayDaltonizerService.getInstance(project).loadState(selectDisplayDaltonizer)
+        DisplayDaltonizerPersistanceState.getInstance(project).loadState(selectDisplayDaltonizer)
         super.doOKAction()
     }
 
@@ -61,7 +61,7 @@ class DisplayDaltonizerForm(
     }
 
     private fun setupComboBox() {
-        state = DisplayDaltonizerService.getInstance(project).state
+        state = DisplayDaltonizerPersistanceState.getInstance(project).state
 
         with(displayDaltonizerList) {
             map { displayDaltonizerCombo.addItem(it) }

@@ -1,10 +1,10 @@
-package com.github.israelermel.iridio77.adb
+package com.github.israelermel.iridio77.models
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver
-import com.github.israelermel.iridio77.services.DisplayDaltonizerService
-import com.github.israelermel.iridio77.services.FontSizeService
-import com.github.israelermel.iridio77.services.LayoutSizeService
+import com.github.israelermel.iridio77.persistancestate.DisplayDaltonizerPersistanceState
+import com.github.israelermel.iridio77.persistancestate.FontSizePersistanceState
+import com.github.israelermel.iridio77.persistancestate.LayoutSizePersistanceState
 import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
 
@@ -16,9 +16,9 @@ class AdbResetConfiguration(val project: Project, val notification: IridioNotifi
                 device.executeShellCommand(it, NullOutputReceiver())
             }
 
-            FontSizeService.getInstance(project).clearData()
-            DisplayDaltonizerService.getInstance(project).clearData()
-            LayoutSizeService.getInstance(project).clearData()
+            FontSizePersistanceState.getInstance(project).clearData()
+            DisplayDaltonizerPersistanceState.getInstance(project).clearData()
+            LayoutSizePersistanceState.getInstance(project).clearData()
 
         } catch (ex: Exception) {
             notification.showAdbNotificationError(MSG_ADB_RESET_CONFIGURATION)

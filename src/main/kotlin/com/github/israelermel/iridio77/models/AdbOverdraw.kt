@@ -1,4 +1,4 @@
-package com.github.israelermel.iridio77.adb
+package com.github.israelermel.iridio77.models
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver

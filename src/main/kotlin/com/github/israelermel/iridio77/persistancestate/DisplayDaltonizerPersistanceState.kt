@@ -1,4 +1,4 @@
-package com.github.israelermel.iridio77.services
+package com.github.israelermel.iridio77.persistancestate
 
 import com.github.israelermel.iridio77.ui.models.DisplayDaltonizerCommand
 import com.intellij.openapi.components.*
@@ -10,7 +10,7 @@ import com.intellij.openapi.project.Project
         Storage(value = "displayDaltonizerConfiguration.xml")
     ]
 )
-class DisplayDaltonizerService : PersistentStateComponent<DisplayDaltonizerCommand> {
+class DisplayDaltonizerPersistanceState : PersistentStateComponent<DisplayDaltonizerCommand> {
 
     private var displayDaltonizerCommand = DisplayDaltonizerCommand()
 
@@ -24,6 +24,6 @@ class DisplayDaltonizerService : PersistentStateComponent<DisplayDaltonizerComma
     }
 
     companion object {
-        fun getInstance(project: Project): DisplayDaltonizerService = project.service()
+        fun getInstance(project: Project): DisplayDaltonizerPersistanceState = project.service()
     }
 }

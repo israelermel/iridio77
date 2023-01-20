@@ -1,7 +1,7 @@
-package com.github.israelermel.iridio77.actions.adb
+package com.github.israelermel.iridio77.actions
 
 import com.github.israelermel.iridio77.models.AndroidDebugEvent
-import com.github.israelermel.iridio77.utils.AndroidDebugBridgeManager
+import com.github.israelermel.iridio77.impl.AndroidDebugBridgeManager
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 

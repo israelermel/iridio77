@@ -1,4 +1,4 @@
-package com.github.israelermel.iridio77.adb
+package com.github.israelermel.iridio77.models
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver
@@ -21,8 +21,8 @@ class AdbAnimations(val project: Project, val notification: IridioNotification) 
                     }
 
                     when (isEnabled) {
-                        true -> device.executeShellCommand(ENABLE_ANIMATIONS, NullOutputReceiver())
-                        false -> device.executeShellCommand(DEFAULT_CONFIGURATION, NullOutputReceiver())
+                        true -> device.executeShellCommand(DEFAULT_CONFIGURATION, NullOutputReceiver())
+                        false -> device.executeShellCommand(ENABLE_ANIMATIONS, NullOutputReceiver())
                     }
                 })
         } catch (ex: Exception) {
@@ -31,10 +31,10 @@ class AdbAnimations(val project: Project, val notification: IridioNotification) 
     }
 
     companion object {
-        const val DEFAULT_CONFIGURATION =
-            "settings put global window_animation_scale 0.0 ; settings put global animator_duration_scale 0.0 ; settings put global transition_animation_scale 0.0"
         const val MSG_ADB_ANIMATIONS = "msgAdbAnimations"
         const val ENABLE_ANIMATIONS =
+            "settings put global window_animation_scale 0.0 ; settings put global animator_duration_scale 0.0 ; settings put global transition_animation_scale 0.0"
+        const val DEFAULT_CONFIGURATION =
             "settings put global window_animation_scale 1.0 ; settings put global animator_duration_scale 1.0 ; settings put global transition_animation_scale 1.0"
 
     }

@@ -1,8 +1,8 @@
 package com.github.israelermel.iridio77.ui
 
 import com.github.israelermel.iridio77.IridioBundle
-import com.github.israelermel.iridio77.adb.AdbScreenDensity
-import com.github.israelermel.iridio77.services.LayoutSizeService
+import com.github.israelermel.iridio77.models.AdbScreenDensity
+import com.github.israelermel.iridio77.persistancestate.LayoutSizePersistanceState
 import com.github.israelermel.iridio77.ui.models.LayoutSizes
 import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
@@ -46,7 +46,7 @@ class ScreenDensityForm(
 
     override fun doOKAction() {
         listener.invoke(selectedLayoutSizes)
-        LayoutSizeService.getInstance(project).loadState(selectedLayoutSizes)
+        LayoutSizePersistanceState.getInstance(project).loadState(selectedLayoutSizes)
         super.doOKAction()
     }
 
@@ -64,7 +64,7 @@ class ScreenDensityForm(
     }
 
     private fun setupComboBox() {
-        state = LayoutSizeService.getInstance(project).state
+        state = LayoutSizePersistanceState.getInstance(project).state
 
         adbScreenDensity.getDefaultDensity()?.let {
             val first = LayoutSizes(label = "Default Density - ${it}dpi", size = it, index = 0)

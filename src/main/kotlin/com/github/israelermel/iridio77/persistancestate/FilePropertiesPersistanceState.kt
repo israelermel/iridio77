@@ -1,4 +1,4 @@
-package com.github.israelermel.iridio77.services
+package com.github.israelermel.iridio77.persistancestate
 
 import com.github.israelermel.iridio77.models.FilePropertiesState
 import com.intellij.openapi.components.*
@@ -10,7 +10,7 @@ import com.intellij.openapi.project.Project
         Storage(value = "filePropertiesConfiguration.xml")
     ]
 )
-class FilePropertiesService : PersistentStateComponent<FilePropertiesState> {
+class FilePropertiesPersistanceState : PersistentStateComponent<FilePropertiesState> {
 
     private var filePropertiesState = FilePropertiesState()
 
@@ -21,6 +21,6 @@ class FilePropertiesService : PersistentStateComponent<FilePropertiesState> {
     }
 
     companion object {
-        fun getInstance(project: Project): FilePropertiesService = project.service()
+        fun getInstance(project: Project): FilePropertiesPersistanceState = project.service()
     }
 }

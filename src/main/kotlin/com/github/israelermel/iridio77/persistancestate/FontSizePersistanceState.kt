@@ -1,4 +1,4 @@
-package com.github.israelermel.iridio77.services
+package com.github.israelermel.iridio77.persistancestate
 
 import com.github.israelermel.iridio77.ui.models.FontSizeCommand
 import com.intellij.openapi.components.*
@@ -10,7 +10,7 @@ import com.intellij.openapi.project.Project
         Storage(value = "fontSizeConfiguration.xml")
     ]
 )
-class FontSizeService : PersistentStateComponent<FontSizeCommand> {
+class FontSizePersistanceState : PersistentStateComponent<FontSizeCommand> {
 
     private var fontSizeState = FontSizeCommand()
 
@@ -25,6 +25,6 @@ class FontSizeService : PersistentStateComponent<FontSizeCommand> {
     }
 
     companion object {
-        fun getInstance(project: Project): FontSizeService = project.service()
+        fun getInstance(project: Project): FontSizePersistanceState = project.service()
     }
 }
