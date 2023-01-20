@@ -1,7 +1,7 @@
 package com.github.israelermel.iridio77.ui
 
 import com.github.israelermel.iridio77.IridioBundle
-import com.github.israelermel.iridio77.services.FontSizeService
+import com.github.israelermel.iridio77.persistancestate.FontSizePersistanceState
 import com.github.israelermel.iridio77.ui.models.Command
 import com.github.israelermel.iridio77.ui.models.FontSizeCommand
 import com.intellij.openapi.project.Project
@@ -41,7 +41,7 @@ class FontSizeForm(
     }
 
     private fun setupComboBox() {
-        state = FontSizeService.getInstance(project).state
+        state = FontSizePersistanceState.getInstance(project).state
 
         with(fontSizes) {
             map { fontSizeCombo.addItem(it) }
@@ -64,7 +64,7 @@ class FontSizeForm(
 
     override fun doOKAction() {
         listener.invoke(selectedFontSize)
-        FontSizeService.getInstance(project).loadState(selectedFontSize)
+        FontSizePersistanceState.getInstance(project).loadState(selectedFontSize)
         super.doOKAction()
     }
 

@@ -13,11 +13,11 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <projectConfigurable instance="com.github.israelermel.iridio77.settings.FilePropertiesSettings"/>
-        <projectService serviceImplementation="com.github.israelermel.iridio77.services.FilePropertiesService"/>
-        <projectService serviceImplementation="com.github.israelermel.iridio77.services.FontSizeService"/>
-        <projectService serviceImplementation="com.github.israelermel.iridio77.services.LayoutSizeService"/>
+        <projectService serviceImplementation="com.github.israelermel.iridio77.persistancestate.FilePropertiesPersistanceState"/>
+        <projectService serviceImplementation="com.github.israelermel.iridio77.persistancestate.FontSizePersistanceState"/>
+        <projectService serviceImplementation="com.github.israelermel.iridio77.persistancestate.LayoutSizePersistanceState"/>
 
-        <projectService serviceImplementation="com.github.israelermel.iridio77.services.DisplayDaltonizerService"/>
+        <projectService serviceImplementation="com.github.israelermel.iridio77.persistancestate.DisplayDaltonizerPersistanceState"/>
 
         <notificationGroup id="Custom Notification Group" displayType="BALLOON"/>
         <notificationGroup id="Custom Notification Group Error" displayType="BALLOON"/>
@@ -26,66 +26,66 @@
     <actions>
         <!--        Accessibility        -->
         <action id="ToogleTalkBackActionId"
-                class="com.github.israelermel.iridio77.actions.adb.ToogleTalkBackAction"
+                class="com.github.israelermel.iridio77.actions.ToogleTalkBackAction"
                 text="_Enable/Disable Talkback"
                 description="Enable/Disable talkback">
         </action>
         <action id="ChangeDisplayDaltonizerActionId"
-                class="com.github.israelermel.iridio77.actions.adb.ChangeDisplayDaltonizerAction"
-                text="_Display Daltonizer"
-                description="Display daltonizer">
+                class="com.github.israelermel.iridio77.actions.ChangeDisplayDaltonizerAction"
+                text="_Change Display Daltonizer"
+                description="Change Display daltonizer">
         </action>
         <action id="ToogleColorInversionActionId"
-                class="com.github.israelermel.iridio77.actions.adb.ToogleColorInversionAction"
-                text="_Color Inversion"
-                description="Color inversion">
+                class="com.github.israelermel.iridio77.actions.ToogleColorInversionAction"
+                text="_Enable/Disable Color Inversion"
+                description="Enable/Disable Color inversion">
         </action>
 
         <!--        Developer Options     -->
         <action id="ToogleLayoutBoundsActionId"
-                class="com.github.israelermel.iridio77.actions.adb.ToogleLayoutBoundsAction"
+                class="com.github.israelermel.iridio77.actions.ToogleLayoutBoundsAction"
                 text="_Enable/Disable Layout Bounds"
                 description="Enable/Disable layout bounds">
         </action>
 
         <action id="ChangeFontSizeActionId"
-                class="com.github.israelermel.iridio77.actions.adb.ChangeFontSizeAction"
+                class="com.github.israelermel.iridio77.actions.ChangeFontSizeAction"
                 text="_Change Font Size"
                 description="Change font size">
         </action>
 
         <action id="ToogleAnimationsActionId"
-                class="com.github.israelermel.iridio77.actions.adb.ToogleAnimationsAction"
+                class="com.github.israelermel.iridio77.actions.ToogleAnimationsAction"
                 text="_Enable/Disable Animations"
                 description="Enable/Disable animations">
         </action>
 
         <action id="ResizeSizeLayoutActionId"
-                class="com.github.israelermel.iridio77.actions.adb.ChangeScreenDensityAction"
+                class="com.github.israelermel.iridio77.actions.ChangeScreenDensityAction"
                 text="_Change Screen Density"
                 description="Change screen density emulator/device">
         </action>
 
         <action id="ToogleProfileActionId"
-                class="com.github.israelermel.iridio77.actions.adb.ToogleProfileAction"
+                class="com.github.israelermel.iridio77.actions.ToogleProfileAction"
                 text="_Enable/Disable Profile"
                 description="Enable/Disable profile">
         </action>
 
         <action id="ToogleOverdrawActionId"
-                class="com.github.israelermel.iridio77.actions.adb.ToogleOverdrawAction"
+                class="com.github.israelermel.iridio77.actions.ToogleOverdrawAction"
                 text="_Enable/Disable Overdraw"
                 description="Enable/Disable overdraw">
         </action>
 
         <action id="ChangeToDefaultConfigurationActionId"
-                class="com.github.israelermel.iridio77.actions.adb.ChangeResetConfigurationAction"
+                class="com.github.israelermel.iridio77.actions.ChangeResetConfigurationAction"
                 text="_Default Configuration"
                 description="Default configuration">
         </action>
 
         <action id="ToogleScreenTouchesActionId"
-                class="com.github.israelermel.iridio77.actions.adb.ToogleScreenTouchesAction"
+                class="com.github.israelermel.iridio77.actions.ToogleScreenTouchesAction"
                 text="_Enable/Disable Screen Touches"
                 description="Enable/Disable Screen touches">
         </action>

@@ -1,8 +1,8 @@
-package com.github.israelermel.iridio77.adb
+package com.github.israelermel.iridio77.models
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver
-import com.github.israelermel.iridio77.actions.adb.SingleLineLayoutBoundsReceiver
+import com.github.israelermel.iridio77.actions.SingleLineLayoutBoundsReceiver
 import com.github.israelermel.iridio77.extensions.toEnableOrDisable
 import com.github.israelermel.iridio77.utils.IridioMessage
 import com.github.israelermel.iridio77.utils.IridioNotification
