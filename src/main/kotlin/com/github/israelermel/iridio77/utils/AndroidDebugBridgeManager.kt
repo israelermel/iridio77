@@ -22,6 +22,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
     private val adbColorInversion by lazy { AdbColorInversion(project, notification) }
     private val adbScreenDensity by lazy { AdbScreenDensity(project, notification) }
     private val adbFontSize by lazy { AdbFontSize(project, notification) }
+    private val adbScreenTouches by lazy { AdbScreenTouches(project, notification) }
 
     override fun onDebugEventTriggered(event: AndroidDebugEvent) {
         val connectedDevices = AndroidSdkUtils.getDebugBridge(project)?.devices
@@ -56,6 +57,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
             AndroidDebugEvent.TOOGLE_OVERDRAW -> adbOverdraw.execute(device)
             AndroidDebugEvent.RESET_CONFIGURATION -> adbResetConfiguration.execute(device)
             AndroidDebugEvent.TOOGLE_COLOR_INVERSION -> adbColorInversion.execute(device)
+            AndroidDebugEvent.TOOGLE_SCREEN_TOUCHES -> adbScreenTouches.execute(device)
         }
     }
 

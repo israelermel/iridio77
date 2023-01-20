@@ -84,6 +84,12 @@
                 description="Default configuration">
         </action>
 
+        <action id="ToogleScreenTouchesActionId"
+                class="com.github.israelermel.iridio77.actions.adb.ToogleScreenTouchesAction"
+                text="_Enable/Disable Screen Touches"
+                description="Enable/Disable Screen touches">
+        </action>
+
         <!--        TOPMENU GROUP  -->
         <group id="IridioActions.TopMenu"
                text="Iridio77"
@@ -102,12 +108,13 @@
 
             <reference ref="ResizeSizeLayoutActionId"/>
             <reference ref="ChangeFontSizeActionId"/>
-            <separator text="Performance"/>
+            <separator/>
             <reference ref="ToogleLayoutBoundsActionId"/>
             <reference ref="ToogleProfileActionId"/>
             <reference ref="ToogleOverdrawActionId"/>
             <separator/>
             <reference ref="ToogleAnimationsActionId"/>
+            <reference ref="ToogleScreenTouchesActionId"/>
         </group>
 
         <group
