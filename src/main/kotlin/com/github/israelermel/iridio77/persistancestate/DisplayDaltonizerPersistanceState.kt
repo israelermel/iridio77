@@ -1,7 +1,11 @@
 package com.github.israelermel.iridio77.persistancestate
 
 import com.github.israelermel.iridio77.ui.models.DisplayDaltonizerCommand
-import com.intellij.openapi.components.*
+import com.intellij.openapi.components.PersistentStateComponent
+import com.intellij.openapi.components.Service
+import com.intellij.openapi.components.State
+import com.intellij.openapi.components.Storage
+import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 
 @Service
@@ -19,6 +23,7 @@ class DisplayDaltonizerPersistanceState : PersistentStateComponent<DisplayDalton
     override fun loadState(state: DisplayDaltonizerCommand) {
         displayDaltonizerCommand = state
     }
+
     fun clearData() {
         displayDaltonizerCommand = DisplayDaltonizerCommand()
     }
