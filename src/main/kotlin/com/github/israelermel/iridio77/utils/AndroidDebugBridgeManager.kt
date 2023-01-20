@@ -3,10 +3,7 @@ package com.github.israelermel.iridio77.utils
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.MultiLineReceiver
 import com.android.ddmlib.NullOutputReceiver
-import com.github.israelermel.iridio77.adb.AdbAnimations
-import com.github.israelermel.iridio77.adb.AdbLayoutBounds
-import com.github.israelermel.iridio77.adb.AdbOverdraw
-import com.github.israelermel.iridio77.adb.AdbProfile
+import com.github.israelermel.iridio77.adb.*
 import com.github.israelermel.iridio77.impl.AndroidDebugBridgeManagerImplementation
 import com.github.israelermel.iridio77.models.AndroidDebugEvent
 import com.github.israelermel.iridio77.ui.models.Command
@@ -19,10 +16,11 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
     private val notification by lazy { IridioNotification(project) }
     private val msgNoDeviceFound by lazy { IridioMessage.getMessageResource("msgNoDeviceFound") }
     private val adbAnimations by lazy { AdbAnimations(project, notification) }
-    private val adbTalkback by lazy { AdbAnimations(project, notification) }
+    private val adbTalkback by lazy { AdbTalkback(project, notification) }
     private val adbLayoutBounds by lazy { AdbLayoutBounds(project, notification) }
     private val adbProfile by lazy { AdbProfile(project, notification) }
     private val adbOverdraw by lazy { AdbOverdraw(project, notification) }
+    private val adbResetConfiguration by lazy { AdbResetConfiguration(project, notification) }
 
     // MESSAGES
     private val MSG_ADB_FONT_SIZE = "msgAdbFontSize"
@@ -59,6 +57,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
             AndroidDebugEvent.TOOGLE_ANIMATIONS -> adbAnimations.execute(device)
             AndroidDebugEvent.TOOGLE_PROFILE -> adbProfile.execute(device)
             AndroidDebugEvent.TOOGLE_OVERDRAW -> adbOverdraw.execute(device)
+            AndroidDebugEvent.RESET_CONFIGURATION -> adbResetConfiguration.execute(device)
         }
     }
 

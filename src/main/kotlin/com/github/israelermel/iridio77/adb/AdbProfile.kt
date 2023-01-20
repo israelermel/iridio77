@@ -9,9 +9,6 @@ import com.intellij.openapi.project.Project
 
 class AdbProfile(val project: Project, val notification: IridioNotification) {
 
-    private val DISABLE_PROFILE = "setprop debug.hwui.profile false"
-    private val MSG_ADB_PROFILE = "msgAdbProfile"
-
     fun execute(device: IDevice) {
         try {
             device.executeShellCommand("getprop debug.hwui.profile",
@@ -30,10 +27,7 @@ class AdbProfile(val project: Project, val notification: IridioNotification) {
                                 NullOutputReceiver()
                             )
 
-                            false -> device.executeShellCommand(
-                                DISABLE_PROFILE,
-                                NullOutputReceiver()
-                            )
+                            false -> device.executeShellCommand(DEFAULT_CONFIGURATION, NullOutputReceiver())
                         }
                     }
 
@@ -41,6 +35,11 @@ class AdbProfile(val project: Project, val notification: IridioNotification) {
         } catch (ex: Exception) {
             notification.showAdbNotificationError(MSG_ADB_PROFILE)
         }
+    }
+
+    companion object {
+        const val DEFAULT_CONFIGURATION = "setprop debug.hwui.profile false"
+        const val MSG_ADB_PROFILE = "msgAdbProfile"
     }
 
 }

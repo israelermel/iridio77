@@ -9,9 +9,6 @@ import com.intellij.openapi.project.Project
 
 class AdbOverdraw(val project: Project, val notification: IridioNotification) {
 
-    private val DISABLE_OVERDRAW = "setprop debug.hwui.overdraw false"
-    private val MSG_ADB_OVERDRAW = "msgAdbOverdraw"
-
     fun execute(device: IDevice) {
         try {
             device.executeShellCommand("getprop debug.hwui.overdraw",
@@ -30,7 +27,7 @@ class AdbOverdraw(val project: Project, val notification: IridioNotification) {
                             )
 
                             false -> device.executeShellCommand(
-                                DISABLE_OVERDRAW,
+                                DEFAULT_CONFIGURATION,
                                 NullOutputReceiver()
                             )
                         }
@@ -39,5 +36,10 @@ class AdbOverdraw(val project: Project, val notification: IridioNotification) {
         } catch (ex: Exception) {
             notification.showAdbNotificationError(MSG_ADB_OVERDRAW)
         }
+    }
+
+    companion object {
+        const val DEFAULT_CONFIGURATION = "setprop debug.hwui.overdraw false"
+        const val MSG_ADB_OVERDRAW = "msgAdbOverdraw"
     }
 }

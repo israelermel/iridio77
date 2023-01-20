@@ -10,12 +10,6 @@ import com.intellij.openapi.project.Project
 
 class AdbTalkback(val project: Project, val notification: IridioNotification) {
 
-    private val MSG_ADB_TALKBACK = "msgAdbTalkback"
-    private val DISABLE_TALKBACK =
-        "settings put secure enabled_accessibility_services com.android.talkback/com.google.android.marvin.talkback.TalkBackService"
-    private val ENABLE_TALKBACK =
-        "settings put secure enabled_accessibility_services com.google.android.marvin.talkback/com.google.android.marvin.talkback.TalkBackService"
-
     fun execute(device: IDevice) {
         try {
             device.executeShellCommand("settings get secure accessibility_enabled",
@@ -27,11 +21,20 @@ class AdbTalkback(val project: Project, val notification: IridioNotification) {
 
                     when (isEnabled) {
                         true -> device.executeShellCommand(ENABLE_TALKBACK, NullOutputReceiver())
-                        false -> device.executeShellCommand(DISABLE_TALKBACK, NullOutputReceiver())
+                        false -> device.executeShellCommand(DEFAULT_CONFIGURATION, NullOutputReceiver())
                     }
                 })
         } catch (ex: Exception) {
             notification.showAdbNotificationError(MSG_ADB_TALKBACK)
         }
+    }
+
+    companion object {
+        const val DEFAULT_CONFIGURATION =
+            "settings put secure enabled_accessibility_services com.android.talkback/com.google.android.marvin.talkback.TalkBackService"
+        const val MSG_ADB_TALKBACK = "msgAdbTalkback"
+        const val ENABLE_TALKBACK =
+            "settings put secure enabled_accessibility_services com.google.android.marvin.talkback/com.google.android.marvin.talkback.TalkBackService"
+
     }
 }

@@ -10,13 +10,6 @@ import com.intellij.openapi.project.Project
 
 class AdbAnimations(val project: Project, val notification: IridioNotification) {
 
-    private val MSG_ADB_ANIMATIONS = "msgAdbAnimations"
-
-    private val ENABLE_ANIMATIONS =
-        "settings put global window_animation_scale 1.0 ; settings put global animator_duration_scale 1.0 ; settings put global transition_animation_scale 1.0"
-    private val DISABLE_ANIMATIONS =
-        "settings put global window_animation_scale 0.0 ; settings put global animator_duration_scale 0.0 ; settings put global transition_animation_scale 0.0"
-
     fun execute(device: IDevice) {
         try {
             device.executeShellCommand("settings get global window_animation_scale",
@@ -29,7 +22,7 @@ class AdbAnimations(val project: Project, val notification: IridioNotification) 
 
                     when (isEnabled) {
                         true -> device.executeShellCommand(ENABLE_ANIMATIONS, NullOutputReceiver())
-                        false -> device.executeShellCommand(DISABLE_ANIMATIONS, NullOutputReceiver())
+                        false -> device.executeShellCommand(DEFAULT_CONFIGURATION, NullOutputReceiver())
                     }
                 })
         } catch (ex: Exception) {
@@ -37,4 +30,12 @@ class AdbAnimations(val project: Project, val notification: IridioNotification) 
         }
     }
 
+    companion object {
+        const val DEFAULT_CONFIGURATION =
+            "settings put global window_animation_scale 0.0 ; settings put global animator_duration_scale 0.0 ; settings put global transition_animation_scale 0.0"
+        const val MSG_ADB_ANIMATIONS = "msgAdbAnimations"
+        const val ENABLE_ANIMATIONS =
+            "settings put global window_animation_scale 1.0 ; settings put global animator_duration_scale 1.0 ; settings put global transition_animation_scale 1.0"
+
+    }
 }

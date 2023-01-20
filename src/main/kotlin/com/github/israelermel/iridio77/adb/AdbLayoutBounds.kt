@@ -9,10 +9,6 @@ import com.intellij.openapi.project.Project
 
 class AdbLayoutBounds(val project: Project, val notification: IridioNotification) {
 
-    private val MSG_ADB_LAYOUT_BOUNDS = "msgAdbLayoutBounds"
-    private val DISABLE_LAYOUT_BOUNDS = "setprop debug.layout false ; service call activity 1599295570"
-    private val ENABLE_LAYOUT_BOUNDS = "setprop debug.layout true ; service call activity 1599295570"
-
     fun execute(device: IDevice) {
 
         device.executeShellCommand(
@@ -26,10 +22,16 @@ class AdbLayoutBounds(val project: Project, val notification: IridioNotification
 
                 when (isEnabled) {
                     true -> device.executeShellCommand(ENABLE_LAYOUT_BOUNDS, NullOutputReceiver())
-                    false -> device.executeShellCommand(DISABLE_LAYOUT_BOUNDS, NullOutputReceiver())
+                    false -> device.executeShellCommand(DEFAULT_CONFIGURATION, NullOutputReceiver())
                 }
             }
         )
+    }
+
+    companion object {
+        const val DEFAULT_CONFIGURATION = "setprop debug.layout false ; service call activity 1599295570"
+        const val MSG_ADB_LAYOUT_BOUNDS = "msgAdbLayoutBounds"
+        const val ENABLE_LAYOUT_BOUNDS = "setprop debug.layout true ; service call activity 1599295570"
 
     }
 }
