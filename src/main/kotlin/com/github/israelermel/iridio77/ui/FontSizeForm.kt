@@ -26,7 +26,6 @@ class FontSizeForm(
             "titleDialogPanelChoose",
             IridioBundle.getMessage("titleFontSize")
         )
-
     }
 
     private val fontSizes = arrayOf(
@@ -39,7 +38,6 @@ class FontSizeForm(
 
     init {
         init()
-
     }
 
     private fun setupComboBox() {

@@ -20,6 +20,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
     private val adbProfile by lazy { AdbProfile(project, notification) }
     private val adbOverdraw by lazy { AdbOverdraw(project, notification) }
     private val adbResetConfiguration by lazy { AdbResetConfiguration(project, notification) }
+    private val adbDisplayDaltonizer by lazy { AdbDisplayDaltonizer(project, notification) }
 
     // MESSAGES
     private val MSG_ADB_FONT_SIZE = "msgAdbFontSize"
@@ -37,7 +38,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
         }
     }
 
-    override fun exeucteEventListener(execute: (device: IDevice) -> Unit) {
+    override fun executeEventListener(execute: (device: IDevice) -> Unit) {
         val connectedDevices = AndroidSdkUtils.getDebugBridge(project)?.devices
         if (connectedDevices.isNullOrEmpty()) {
             notification.adbNotification(msgNoDeviceFound)
@@ -67,7 +68,7 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
                 notification.adbNotification(it)
             }
 
-            exeucteEventListener { device ->
+            executeEventListener { device ->
                 device.executeShellCommand("wm density ${layoutSizes.size}", NullOutputReceiver())
             }
         } catch (ex: Exception) {
@@ -77,12 +78,11 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
 
     override fun changeFontSize(command: Command) {
         try {
-
             IridioMessage.getAdbChangePropertyMessage(MSG_ADB_FONT_SIZE, command.getCommand()).also {
                 notification.adbNotification(it)
             }
 
-            exeucteEventListener { device ->
+            executeEventListener { device ->
                 device.executeShellCommand(
                     "settings put system font_scale ${command.getCommand()}",
                     NullOutputReceiver()
@@ -90,6 +90,12 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
             }
         } catch (ex: Exception) {
             notification.showAdbNotificationError(MSG_ADB_FONT_SIZE)
+        }
+    }
+
+    override fun changeDisplayDaltonizer(command: Command) {
+        executeEventListener {
+            adbDisplayDaltonizer.execute(it, command)
         }
     }
 }

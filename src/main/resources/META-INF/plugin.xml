@@ -17,21 +17,30 @@
         <projectService serviceImplementation="com.github.israelermel.iridio77.services.FontSizeService"/>
         <projectService serviceImplementation="com.github.israelermel.iridio77.services.LayoutSizeService"/>
 
-        <notificationGroup id="Custom Notification Group" displayType="BALLOON"  />
-        <notificationGroup id="Custom Notification Group Error" displayType="BALLOON"  />
+        <projectService serviceImplementation="com.github.israelermel.iridio77.services.DisplayDaltonizerService"/>
+
+        <notificationGroup id="Custom Notification Group" displayType="BALLOON"/>
+        <notificationGroup id="Custom Notification Group Error" displayType="BALLOON"/>
     </extensions>
 
     <actions>
-        <action id="ToogleLayoutBoundsActionId"
-                class="com.github.israelermel.iridio77.actions.adb.ToogleLayoutBoundsAction"
-                text="_Enable/Disable Layout Bounds"
-                description="Enable/Disable layout bounds">
-        </action>
-
+        <!--        Accessibility        -->
         <action id="ToogleTalkBackActionId"
                 class="com.github.israelermel.iridio77.actions.adb.ToogleTalkBackAction"
                 text="_Enable/Disable Talkback"
                 description="Enable/Disable talkback">
+        </action>
+        <action id="ChangeDisplayDaltonizerActionId"
+                class="com.github.israelermel.iridio77.actions.adb.ChangeDisplayDaltonizerAction"
+                text="_Display Daltonizer"
+                description="Display daltonizer">
+        </action>
+
+        <!--        Developer Options     -->
+        <action id="ToogleLayoutBoundsActionId"
+                class="com.github.israelermel.iridio77.actions.adb.ToogleLayoutBoundsAction"
+                text="_Enable/Disable Layout Bounds"
+                description="Enable/Disable layout bounds">
         </action>
 
         <action id="ChangeFontSizeActionId"
@@ -64,18 +73,20 @@
                 description="Enable/Disable overdraw">
         </action>
 
+        <action id="ChangeToDefaultConfigurationActionId"
+                class="com.github.israelermel.iridio77.actions.adb.ChangeToResetConfigurationAction"
+                text="_Default Configuration"
+                description="Default configuration">
+        </action>
+
         <!--        TOPMENU GROUP  -->
         <group id="IridioActions.TopMenu"
                text="Iridio77"
                description="Iridio77">
             <add-to-group group-id="MainMenu" anchor="last"/>
 
-            <separator />
-            <action id="ChangeToDefaultConfigurationActionId"
-                    class="com.github.israelermel.iridio77.actions.adb.ChangeToResetConfigurationActionId"
-                    text="_Default Configuration"
-                    description="Default configuration">
-            </action>
+            <separator/>
+            <reference ref="ChangeToDefaultConfigurationActionId"/>
         </group>
 
         <!--        GROUPS ACTIONS  -->
@@ -100,6 +111,7 @@
                 popup="true">
             <add-to-group group-id="IridioActions.TopMenu" anchor="first"/>
             <reference ref="ToogleTalkBackActionId"/>
+            <reference ref="ChangeDisplayDaltonizerActionId"/>
         </group>
 
     </actions>

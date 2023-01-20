@@ -10,6 +10,7 @@ interface AndroidDebugBridgeManagerImplementation {
     fun onDebugEventTriggered(event: AndroidDebugEvent)
     fun executeEvent(event: AndroidDebugEvent, device: IDevice)
     fun changeFontSize(command: Command)
+    fun changeDisplayDaltonizer(command: Command)
     fun resizeLayoutDensity(layoutSizes: LayoutSizes)
-    fun exeucteEventListener(execute: (device: IDevice) -> Unit)
+    fun executeEventListener(execute: (device: IDevice) -> Unit)
 }
