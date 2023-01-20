@@ -20,6 +20,10 @@ class LayoutSizeService : PersistentStateComponent<LayoutSizes> {
         layoutSizes = state
     }
 
+    fun clearData() {
+        layoutSizes = LayoutSizes()
+    }
+
     companion object {
         fun getInstance(project: Project): LayoutSizeService = project.service()
     }
