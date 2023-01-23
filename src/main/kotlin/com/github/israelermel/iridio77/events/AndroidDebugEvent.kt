@@ -1,4 +1,4 @@
-package com.github.israelermel.iridio77.models
+package com.github.israelermel.iridio77.events
 
 enum class AndroidDebugEvent {
     SHOW_LAYOUT_BOUNDS,

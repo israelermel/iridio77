@@ -1,7 +1,7 @@
 package com.github.israelermel.iridio77.ui
 
 import com.github.israelermel.iridio77.IridioBundle
-import com.github.israelermel.iridio77.models.AdbScreenDensity
+import com.github.israelermel.iridio77.events.AdbScreenDensityEvent
 import com.github.israelermel.iridio77.persistancestate.LayoutSizePersistanceState
 import com.github.israelermel.iridio77.ui.models.LayoutSizes
 import com.github.israelermel.iridio77.utils.IridioNotification
@@ -23,7 +23,7 @@ class ScreenDensityForm(
     private lateinit var selectedLayoutSizes: LayoutSizes
 
     private val notification by lazy { IridioNotification(project) }
-    private val adbScreenDensity by lazy { AdbScreenDensity(project, notification) }
+    private val adbScreenDensity by lazy { AdbScreenDensityEvent(project, notification) }
 
     private var densityCombo: ComboBox<LayoutSizes> = ComboBox<LayoutSizes>().apply {
         name = "densityCombo"

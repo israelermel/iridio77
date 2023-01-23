@@ -1,4 +1,4 @@
-package com.github.israelermel.iridio77.models
+package com.github.israelermel.iridio77.events
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver
@@ -7,9 +7,9 @@ import com.github.israelermel.iridio77.utils.IridioMessage
 import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
 
-class AdbLayoutBounds(val project: Project, val notification: IridioNotification) {
+class AdbLayoutBoundsEvent(val project: Project, val notification: IridioNotification) : AdbActionEvent {
 
-    fun execute(device: IDevice) {
+    override fun execute(device: IDevice) {
 
         device.executeShellCommand(
             "getprop debug.layout",

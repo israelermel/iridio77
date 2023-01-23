@@ -1,4 +1,4 @@
-package com.github.israelermel.iridio77.models
+package com.github.israelermel.iridio77.events
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver
@@ -10,7 +10,7 @@ import com.github.israelermel.iridio77.utils.SingleLineLayoutSizeReceiver
 import com.intellij.openapi.project.Project
 import org.jetbrains.android.sdk.AndroidSdkUtils
 
-class AdbScreenDensity(val project: Project, val notification: IridioNotification) {
+class AdbScreenDensityEvent(val project: Project, val notification: IridioNotification) {
 
     fun execute(device: IDevice, command: Command) {
         try {

@@ -1,7 +1,7 @@
 package com.github.israelermel.iridio77.impl
 
 import com.android.ddmlib.IDevice
-import com.github.israelermel.iridio77.models.AndroidDebugEvent
+import com.github.israelermel.iridio77.events.AndroidDebugEvent
 import com.github.israelermel.iridio77.ui.models.Command
 
 interface AndroidDebugBridgeManagerImplementation {

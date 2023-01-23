@@ -1,4 +1,4 @@
-package com.github.israelermel.iridio77.models
+package com.github.israelermel.iridio77.events
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver
@@ -8,9 +8,9 @@ import com.github.israelermel.iridio77.persistancestate.LayoutSizePersistanceSta
 import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
 
-class AdbResetConfiguration(val project: Project, val notification: IridioNotification) {
+class AdbResetConfigurationEvent(val project: Project, val notification: IridioNotification) : AdbActionEvent {
 
-    fun execute(device: IDevice) {
+    override fun execute(device: IDevice) {
         try {
             getAllCommands().forEach {
                 device.executeShellCommand(it, NullOutputReceiver())
@@ -27,15 +27,16 @@ class AdbResetConfiguration(val project: Project, val notification: IridioNotifi
 
     private fun getAllCommands(): List<String> {
         return mutableListOf(
-            AdbAnimations.DEFAULT_CONFIGURATION,
-            AdbTalkback.DEFAULT_CONFIGURATION,
-            AdbProfile.DEFAULT_CONFIGURATION,
-            AdbOverdraw.DEFAULT_CONFIGURATION,
-            AdbLayoutBounds.DEFAULT_CONFIGURATION,
-            AdbScreenDensity.DEFAULT_CONFIGURATION,
-            AdbFontSize.DEFAULT_CONFIGURATION,
-            AdbColorInversion.DEFAULT_CONFIGURATION,
-            AdbDisplayDaltonizer.DEFAULT_CONFIGURATION
+            AdbAnimationsEvent.DEFAULT_CONFIGURATION,
+            AdbTalkbackEvent.DEFAULT_CONFIGURATION,
+            AdbProfileEvent.DEFAULT_CONFIGURATION,
+            AdbOverdrawEvent.DEFAULT_CONFIGURATION,
+            AdbLayoutBoundsEvent.DEFAULT_CONFIGURATION,
+            AdbScreenDensityEvent.DEFAULT_CONFIGURATION,
+            AdbFontSizeEvent.DEFAULT_CONFIGURATION,
+            AdbColorInversionEvent.DEFAULT_CONFIGURATION,
+            AdbDisplayDaltonizerEvent.DEFAULT_CONFIGURATION,
+            AdbScreenTouchesEvent.DEFAULT_CONFIGURATION
         )
     }
 

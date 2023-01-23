@@ -1,18 +1,18 @@
 package com.github.israelermel.iridio77.impl
 
 import com.android.ddmlib.IDevice
-import com.github.israelermel.iridio77.models.AdbAnimations
-import com.github.israelermel.iridio77.models.AdbColorInversion
-import com.github.israelermel.iridio77.models.AdbDisplayDaltonizer
-import com.github.israelermel.iridio77.models.AdbFontSize
-import com.github.israelermel.iridio77.models.AdbLayoutBounds
-import com.github.israelermel.iridio77.models.AdbOverdraw
-import com.github.israelermel.iridio77.models.AdbProfile
-import com.github.israelermel.iridio77.models.AdbResetConfiguration
-import com.github.israelermel.iridio77.models.AdbScreenDensity
-import com.github.israelermel.iridio77.models.AdbScreenTouches
-import com.github.israelermel.iridio77.models.AdbTalkback
-import com.github.israelermel.iridio77.models.AndroidDebugEvent
+import com.github.israelermel.iridio77.events.AdbAnimationsEvent
+import com.github.israelermel.iridio77.events.AdbColorInversionEvent
+import com.github.israelermel.iridio77.events.AdbDisplayDaltonizerEvent
+import com.github.israelermel.iridio77.events.AdbFontSizeEvent
+import com.github.israelermel.iridio77.events.AdbLayoutBoundsEvent
+import com.github.israelermel.iridio77.events.AdbOverdrawEvent
+import com.github.israelermel.iridio77.events.AdbProfileEvent
+import com.github.israelermel.iridio77.events.AdbResetConfigurationEvent
+import com.github.israelermel.iridio77.events.AdbScreenDensityEvent
+import com.github.israelermel.iridio77.events.AdbScreenTouchesEvent
+import com.github.israelermel.iridio77.events.AdbTalkbackEvent
+import com.github.israelermel.iridio77.events.AndroidDebugEvent
 import com.github.israelermel.iridio77.ui.models.Command
 import com.github.israelermel.iridio77.utils.IridioMessage
 import com.github.israelermel.iridio77.utils.IridioNotification
@@ -23,17 +23,17 @@ class AndroidDebugBridgeManager constructor(private val project: Project) : Andr
 
     private val notification by lazy { IridioNotification(project) }
     private val msgNoDeviceFound by lazy { IridioMessage.getMessageResource("msgNoDeviceFound") }
-    private val adbAnimations by lazy { AdbAnimations(project, notification) }
-    private val adbTalkback by lazy { AdbTalkback(project, notification) }
-    private val adbLayoutBounds by lazy { AdbLayoutBounds(project, notification) }
-    private val adbProfile by lazy { AdbProfile(project, notification) }
-    private val adbOverdraw by lazy { AdbOverdraw(project, notification) }
-    private val adbResetConfiguration by lazy { AdbResetConfiguration(project, notification) }
-    private val adbDisplayDaltonizer by lazy { AdbDisplayDaltonizer(project, notification) }
-    private val adbColorInversion by lazy { AdbColorInversion(project, notification) }
-    private val adbScreenDensity by lazy { AdbScreenDensity(project, notification) }
-    private val adbFontSize by lazy { AdbFontSize(project, notification) }
-    private val adbScreenTouches by lazy { AdbScreenTouches(project, notification) }
+    private val adbAnimations by lazy { AdbAnimationsEvent(project, notification) }
+    private val adbTalkback by lazy { AdbTalkbackEvent(project, notification) }
+    private val adbLayoutBounds by lazy { AdbLayoutBoundsEvent(project, notification) }
+    private val adbProfile by lazy { AdbProfileEvent(project, notification) }
+    private val adbOverdraw by lazy { AdbOverdrawEvent(project, notification) }
+    private val adbResetConfiguration by lazy { AdbResetConfigurationEvent(project, notification) }
+    private val adbDisplayDaltonizer by lazy { AdbDisplayDaltonizerEvent(project, notification) }
+    private val adbColorInversion by lazy { AdbColorInversionEvent(project, notification) }
+    private val adbScreenDensity by lazy { AdbScreenDensityEvent(project, notification) }
+    private val adbFontSize by lazy { AdbFontSizeEvent(project, notification) }
+    private val adbScreenTouches by lazy { AdbScreenTouchesEvent(project, notification) }
 
     override fun onDebugEventTriggered(event: AndroidDebugEvent) {
         val connectedDevices = AndroidSdkUtils.getDebugBridge(project)?.devices

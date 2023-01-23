@@ -1,4 +1,4 @@
-package com.github.israelermel.iridio77.models
+package com.github.israelermel.iridio77.events
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver
@@ -8,12 +8,12 @@ import com.github.israelermel.iridio77.utils.IridioMessage
 import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
 
-class AdbColorInversion(
+class AdbColorInversionEvent(
     val project: Project,
     val notification: IridioNotification
-) {
+) : AdbActionEvent {
 
-    fun execute(device: IDevice) {
+    override fun execute(device: IDevice) {
         device.executeShellCommand(
             "settings get secure accessibility_display_inversion_enabled",
             SingleLineLayoutBoundsReceiver { firstLine ->
