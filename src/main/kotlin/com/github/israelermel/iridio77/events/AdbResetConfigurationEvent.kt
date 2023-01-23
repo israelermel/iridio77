@@ -5,6 +5,7 @@ import com.android.ddmlib.NullOutputReceiver
 import com.github.israelermel.iridio77.persistancestate.DisplayDaltonizerPersistanceState
 import com.github.israelermel.iridio77.persistancestate.FontSizePersistanceState
 import com.github.israelermel.iridio77.persistancestate.LayoutSizePersistanceState
+import com.github.israelermel.iridio77.utils.IridioMessage
 import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
 
@@ -20,8 +21,11 @@ class AdbResetConfigurationEvent(val project: Project, val notification: IridioN
             DisplayDaltonizerPersistanceState.getInstance(project).clearData()
             LayoutSizePersistanceState.getInstance(project).clearData()
 
+            IridioMessage.getAdbPropertyMessage(MSG_ADB_SUCCESS_RESET_CONFIGURATION).also {
+                notification.adbNotification(it)
+            }
         } catch (ex: Exception) {
-            notification.showAdbNotificationError(MSG_ADB_RESET_CONFIGURATION)
+            notification.showAdbNotificationError(MSG_ADB_ERROR_RESET_CONFIGURATION)
         }
     }
 
@@ -41,6 +45,7 @@ class AdbResetConfigurationEvent(val project: Project, val notification: IridioN
     }
 
     companion object {
-        const val MSG_ADB_RESET_CONFIGURATION = "msg.error.adb.reset.configuration"
+        const val MSG_ADB_ERROR_RESET_CONFIGURATION = "msg.error.adb.reset.configuration"
+        const val MSG_ADB_SUCCESS_RESET_CONFIGURATION = "msg.success.adb.reset.configuration"
     }
 }

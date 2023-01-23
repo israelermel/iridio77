@@ -10,9 +10,9 @@ import com.intellij.openapi.project.Project
 class AdbDisplayDaltonizerEvent(
     val project: Project,
     val notification: IridioNotification
-) {
+) : AdbFormActionEvent {
 
-    fun execute(device: IDevice, command: Command) {
+    override fun execute(device: IDevice, command: Command) {
         try {
 
             IridioMessage.getAdbChangePropertyMessage(MSG_ADB_DISPLAY_DALTONIZER, command.getLabel()).also {

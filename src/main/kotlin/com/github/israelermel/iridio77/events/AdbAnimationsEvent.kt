@@ -31,7 +31,7 @@ class AdbAnimationsEvent(val project: Project, val notification: IridioNotificat
     }
 
     companion object {
-        const val MSG_ADB_ANIMATIONS = "msgAdbAnimations"
+        const val MSG_ADB_ANIMATIONS = "msg.adb.label.animations"
         const val ENABLE_ANIMATIONS =
             "settings put global window_animation_scale 0.0 ; settings put global animator_duration_scale 0.0 ; settings put global transition_animation_scale 0.0"
         const val DEFAULT_CONFIGURATION =

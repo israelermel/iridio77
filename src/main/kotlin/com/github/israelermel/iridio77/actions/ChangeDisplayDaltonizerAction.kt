@@ -1,24 +1,17 @@
 package com.github.israelermel.iridio77.actions
 
+import com.github.israelermel.iridio77.events.AdbDisplayDaltonizerEvent
+import com.github.israelermel.iridio77.impl.FormActionCommand
 import com.github.israelermel.iridio77.ui.DisplayDaltonizerForm
 import com.github.israelermel.iridio77.ui.models.Command
-import com.github.israelermel.iridio77.impl.AndroidDebugBridgeManager
-import com.intellij.openapi.actionSystem.AnAction
-import com.intellij.openapi.actionSystem.AnActionEvent
+import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
 
-class ChangeDisplayDaltonizerAction : AnAction() {
+class ChangeDisplayDaltonizerAction : FormActionCommand() {
+    override fun adbCommandEvent(project: Project, command: IridioNotification) =
+        AdbDisplayDaltonizerEvent(project, command)
 
-    override fun actionPerformed(event: AnActionEvent) {
-        event.project?.let { project ->
-            DisplayDaltonizerForm(project) { changeDisplayDaltonizer(project, it) }
-        }?.also {
-            it.show()
-        }
-    }
-
-    private fun changeDisplayDaltonizer(project: Project, command: Command) {
-        AndroidDebugBridgeManager(project).changeDisplayDaltonizer(command)
-    }
+    override fun adbForm(project: Project, listener: (Command) -> Unit) =
+        DisplayDaltonizerForm(project, listener)
 
 }

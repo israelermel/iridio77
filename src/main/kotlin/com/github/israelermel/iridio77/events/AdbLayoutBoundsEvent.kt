@@ -2,7 +2,7 @@ package com.github.israelermel.iridio77.events
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver
-import com.github.israelermel.iridio77.actions.SingleLineLayoutBoundsReceiver
+import com.github.israelermel.iridio77.receivers.SingleLineAdbReceiver
 import com.github.israelermel.iridio77.utils.IridioMessage
 import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
@@ -13,7 +13,7 @@ class AdbLayoutBoundsEvent(val project: Project, val notification: IridioNotific
 
         device.executeShellCommand(
             "getprop debug.layout",
-            SingleLineLayoutBoundsReceiver { firstLine ->
+            SingleLineAdbReceiver { firstLine ->
                 val isEnabled = firstLine.toBoolean().not()
 
                 IridioMessage.getAdbPropertyMessageFromBoolean(MSG_ADB_LAYOUT_BOUNDS, isEnabled).also {
@@ -30,7 +30,7 @@ class AdbLayoutBoundsEvent(val project: Project, val notification: IridioNotific
 
     companion object {
         const val DEFAULT_CONFIGURATION = "setprop debug.layout false ; service call activity 1599295570"
-        const val MSG_ADB_LAYOUT_BOUNDS = "msgAdbLayoutBounds"
+        const val MSG_ADB_LAYOUT_BOUNDS = "msg.adb.label.layout.bounds"
         const val ENABLE_LAYOUT_BOUNDS = "setprop debug.layout true ; service call activity 1599295570"
 
     }

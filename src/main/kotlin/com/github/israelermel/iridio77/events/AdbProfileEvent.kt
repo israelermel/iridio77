@@ -39,7 +39,7 @@ class AdbProfileEvent(val project: Project, val notification: IridioNotification
 
     companion object {
         const val DEFAULT_CONFIGURATION = "setprop debug.hwui.profile false"
-        const val MSG_ADB_PROFILE = "msgAdbProfile"
+        const val MSG_ADB_PROFILE = "msg.adb.label.profile"
     }
 
 }

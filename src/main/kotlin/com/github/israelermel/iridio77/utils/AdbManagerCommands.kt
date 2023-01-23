@@ -6,7 +6,7 @@ import org.jetbrains.android.sdk.AndroidSdkUtils
 
 class AdbManagerCommands(val project: Project, val notification: IridioNotification) {
 
-    private val msgNoDeviceFound by lazy { IridioMessage.getMessageResource("msgNoDeviceFound") }
+    private val msgNoDeviceFound by lazy { IridioMessage.getMessageResource("msg.adb.no.device.found") }
     
     fun executeEvent(execute: (device: IDevice) -> Unit) {
         val connectedDevices = AndroidSdkUtils.getDebugBridge(project)?.devices

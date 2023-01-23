@@ -40,6 +40,6 @@ class AdbOverdrawEvent(val project: Project, val notification: IridioNotificatio
 
     companion object {
         const val DEFAULT_CONFIGURATION = "setprop debug.hwui.overdraw false"
-        const val MSG_ADB_OVERDRAW = "msgAdbOverdraw"
+        const val MSG_ADB_OVERDRAW = "msg.adb.label.overdraw"
     }
 }

@@ -23,8 +23,8 @@ class FontSizeForm(
     private var fontSizeCombo: ComboBox<FontSizeCommand> = ComboBox<FontSizeCommand>().apply {
         name = "fontSizeCombo"
         title = IridioBundle.getMessage(
-            "titleDialogPanelChoose",
-            IridioBundle.getMessage("titleFontSize")
+            "msg.adb.tile.dialog.panel.choose",
+            IridioBundle.getMessage("msg.adb.title.font.size")
         )
     }
 
@@ -71,7 +71,7 @@ class FontSizeForm(
     override fun createCenterPanel(): JComponent {
         setupComboBox()
 
-        val title = IridioBundle.getMessage("titleFontSize")
+        val title = IridioBundle.getMessage("msg.adb.title.font.size")
 
         return FormBuilder.createFormBuilder()
             .addLabeledComponent(title, fontSizeCombo)

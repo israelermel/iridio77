@@ -10,9 +10,9 @@ import com.intellij.openapi.project.Project
 class AdbFontSizeEvent(
     val project: Project,
     val notification: IridioNotification
-) {
+) : AdbFormActionEvent {
 
-    fun execute(device: IDevice, command: Command) {
+    override fun execute(device: IDevice, command: Command) {
         try {
             IridioMessage.getAdbChangePropertyMessage(MSG_ADB_FONT_SIZE, command.getCommand()).also {
                 notification.adbNotification(it)
@@ -30,6 +30,6 @@ class AdbFontSizeEvent(
 
     companion object {
         const val DEFAULT_CONFIGURATION = "settings put system font_scale 1.0"
-        const val MSG_ADB_FONT_SIZE = "msgAdbFontSize"
+        const val MSG_ADB_FONT_SIZE = "msg.adb.label.font.size"
     }
 }

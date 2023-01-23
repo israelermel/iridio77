@@ -32,7 +32,7 @@ class AdbTalkbackEvent(val project: Project, val notification: IridioNotificatio
     companion object {
         const val DEFAULT_CONFIGURATION =
             "settings put secure enabled_accessibility_services com.android.talkback/com.google.android.marvin.talkback.TalkBackService"
-        const val MSG_ADB_TALKBACK = "msgAdbTalkback"
+        const val MSG_ADB_TALKBACK = "msg.adb.label.talkback"
         const val ENABLE_TALKBACK =
             "settings put secure enabled_accessibility_services com.google.android.marvin.talkback/com.google.android.marvin.talkback.TalkBackService"
 
