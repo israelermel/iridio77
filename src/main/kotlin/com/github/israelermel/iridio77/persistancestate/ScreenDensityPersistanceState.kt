@@ -1,6 +1,6 @@
 package com.github.israelermel.iridio77.persistancestate
 
-import com.github.israelermel.iridio77.ui.models.DensityCommand
+import com.github.israelermel.iridio77.ui.models.command.DensityCommand
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.State
@@ -14,21 +14,21 @@ import com.intellij.openapi.project.Project
         Storage(value = "layoutSizeConfiguration.xml")
     ]
 )
-class LayoutSizePersistanceState : PersistentStateComponent<DensityCommand> {
+class ScreenDensityPersistanceState : PersistentStateComponent<DensityCommand> {
 
-    private var layoutSizes = DensityCommand()
+    private var densityCommand = DensityCommand()
 
-    override fun getState(): DensityCommand = layoutSizes
+    override fun getState(): DensityCommand = densityCommand
 
     override fun loadState(state: DensityCommand) {
-        layoutSizes = state
+        densityCommand = state
     }
 
     fun clearData() {
-        layoutSizes = DensityCommand()
+        densityCommand = DensityCommand()
     }
 
     companion object {
-        fun getInstance(project: Project): LayoutSizePersistanceState = project.service()
+        fun getInstance(project: Project): ScreenDensityPersistanceState = project.service()
     }
 }

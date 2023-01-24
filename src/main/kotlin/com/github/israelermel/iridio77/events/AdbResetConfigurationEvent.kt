@@ -2,14 +2,15 @@ package com.github.israelermel.iridio77.events
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver
+import com.github.israelermel.iridio77.events.base.AdbActionEvent
 import com.github.israelermel.iridio77.persistancestate.DisplayDaltonizerPersistanceState
 import com.github.israelermel.iridio77.persistancestate.FontSizePersistanceState
-import com.github.israelermel.iridio77.persistancestate.LayoutSizePersistanceState
-import com.github.israelermel.iridio77.utils.IridioMessage
-import com.github.israelermel.iridio77.utils.IridioNotification
+import com.github.israelermel.iridio77.persistancestate.ScreenDensityPersistanceState
+import com.github.israelermel.iridio77.utils.IRMessage
+import com.github.israelermel.iridio77.utils.IRNotification
 import com.intellij.openapi.project.Project
 
-class AdbResetConfigurationEvent(val project: Project, val notification: IridioNotification) : AdbActionEvent {
+class AdbResetConfigurationEvent(val project: Project, val notification: IRNotification) : AdbActionEvent {
 
     override fun execute(device: IDevice) {
         try {
@@ -19,9 +20,9 @@ class AdbResetConfigurationEvent(val project: Project, val notification: IridioN
 
             FontSizePersistanceState.getInstance(project).clearData()
             DisplayDaltonizerPersistanceState.getInstance(project).clearData()
-            LayoutSizePersistanceState.getInstance(project).clearData()
+            ScreenDensityPersistanceState.getInstance(project).clearData()
 
-            IridioMessage.getAdbPropertyMessage(MSG_ADB_SUCCESS_RESET_CONFIGURATION).also {
+            IRMessage.getAdbPropertyMessage(MSG_ADB_SUCCESS_RESET_CONFIGURATION).also {
                 notification.adbNotification(it)
             }
         } catch (ex: Exception) {

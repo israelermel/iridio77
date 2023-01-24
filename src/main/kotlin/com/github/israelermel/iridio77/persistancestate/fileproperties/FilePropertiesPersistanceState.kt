@@ -1,6 +1,5 @@
-package com.github.israelermel.iridio77.persistancestate
+package com.github.israelermel.iridio77.persistancestate.fileproperties
 
-import com.github.israelermel.iridio77.events.FilePropertiesState
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.State

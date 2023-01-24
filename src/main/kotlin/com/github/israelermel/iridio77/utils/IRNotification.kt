@@ -4,9 +4,9 @@ import com.github.israelermel.iridio77.extensions.showNotification
 import com.github.israelermel.iridio77.extensions.showNotificationError
 import com.intellij.openapi.project.Project
 
-class IridioNotification(private val project: Project) {
+class IRNotification(private val project: Project) {
 
-    private val ADB_TITLE = "ADB Events"
+    private val ADB_TITLE = "Iridio77 Events"
 
     fun adbNotification(msg: String) {
         project.showNotification(
@@ -17,7 +17,7 @@ class IridioNotification(private val project: Project) {
 
     fun showAdbNotificationError(property: String) {
         project.showNotificationError(
-            IridioMessage.getErrorMessage(property), ADB_TITLE
+            IRMessage.getErrorMessage(property), ADB_TITLE
         )
     }
 }

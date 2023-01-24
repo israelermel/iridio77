@@ -2,15 +2,15 @@ package com.github.israelermel.iridio77.ui
 
 import com.github.israelermel.iridio77.IridioBundle
 import com.github.israelermel.iridio77.events.AdbScreenDensityEvent
-import com.github.israelermel.iridio77.persistancestate.LayoutSizePersistanceState
-import com.github.israelermel.iridio77.ui.models.DensityCommand
-import com.github.israelermel.iridio77.utils.IridioNotification
+import com.github.israelermel.iridio77.persistancestate.ScreenDensityPersistanceState
+import com.github.israelermel.iridio77.ui.models.command.DensityCommand
+import com.github.israelermel.iridio77.ui.models.command.DensityState
+import com.github.israelermel.iridio77.utils.IRNotification
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.util.ui.FormBuilder
 import org.jetbrains.kotlin.utils.addToStdlib.ifTrue
-import java.awt.Dimension
 import javax.swing.JComponent
 
 
@@ -20,9 +20,9 @@ class ScreenDensityForm(
 ) : DialogWrapper(project) {
 
     private lateinit var state: DensityCommand
-    private lateinit var selectedLayoutSizes: DensityCommand
+    private lateinit var selectedDensity: DensityCommand
 
-    private val notification by lazy { IridioNotification(project) }
+    private val notification by lazy { IRNotification(project) }
     private val adbScreenDensity by lazy { AdbScreenDensityEvent(project, notification) }
 
     private var densityCombo: ComboBox<DensityCommand> = ComboBox<DensityCommand>().apply {
@@ -34,10 +34,10 @@ class ScreenDensityForm(
     }
 
     private val densities = mutableListOf(
-        DensityCommand(label = "hdpi - 240dpi", density = (240 * 1.1).toInt()),
-        DensityCommand(label = "xhdpi - 320dpi", density = (320 * 1.1).toInt()),
-        DensityCommand(label = "xxhdpi - 480dpi", density = (480 * 1.1).toInt()),
-        DensityCommand(label = "xxxhdpi - 640dpi", density = (640 * 1.1).toInt())
+        DensityCommand(state = DensityState.HDPI),
+        DensityCommand(state = DensityState.XHDPI),
+        DensityCommand(state = DensityState.XXHDPI),
+        DensityCommand(state = DensityState.XXXHDPI)
     )
 
     init {
@@ -45,30 +45,32 @@ class ScreenDensityForm(
     }
 
     override fun doOKAction() {
-        listener.invoke(selectedLayoutSizes)
-        LayoutSizePersistanceState.getInstance(project).loadState(selectedLayoutSizes)
+        listener.invoke(selectedDensity)
+        ScreenDensityPersistanceState.getInstance(project).loadState(selectedDensity)
         super.doOKAction()
     }
 
     override fun createCenterPanel(): JComponent {
         setupComboBox()
 
-        val title = IridioBundle.getMessage("msg.adb.title.font.size")
+        val title = IridioBundle.getMessage("msg.adb.label.density")
+        val buttonOkText = IridioBundle.getMessage("label.button.change")
 
         return FormBuilder.createFormBuilder()
             .addLabeledComponent(title, densityCombo)
             .panel.apply {
-                minimumSize = Dimension(400, 100)
-                preferredSize = Dimension(400, 100)
+                setOKButtonText(buttonOkText)
             }
     }
 
     private fun setupComboBox() {
-        state = LayoutSizePersistanceState.getInstance(project).state
+        state = ScreenDensityPersistanceState.getInstance(project).state
 
-        adbScreenDensity.getDefaultDensity()?.let {
-            val first = DensityCommand(label = "Default Density - ${it}dpi", density = it)
-            densities.add(0, first)
+        adbScreenDensity.getDefaultDensity()?.let { defaultDensity ->
+            DensityCommand(label = "Default Density - ${defaultDensity}dpi", density = defaultDensity).also {
+                densities.add(0, it)
+            }
+
         }
 
         with(densities) {
@@ -86,7 +88,7 @@ class ScreenDensityForm(
         densityCombo.addActionListener {
             val density = densityCombo.selectedItem as? DensityCommand?
             density?.let {
-                selectedLayoutSizes = it
+                selectedDensity = it
             }
         }
     }

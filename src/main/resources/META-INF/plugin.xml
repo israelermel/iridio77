@@ -13,11 +13,15 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <projectConfigurable instance="com.github.israelermel.iridio77.settings.FilePropertiesSettings"/>
-        <projectService serviceImplementation="com.github.israelermel.iridio77.persistancestate.FilePropertiesPersistanceState"/>
-        <projectService serviceImplementation="com.github.israelermel.iridio77.persistancestate.FontSizePersistanceState"/>
-        <projectService serviceImplementation="com.github.israelermel.iridio77.persistancestate.LayoutSizePersistanceState"/>
+        <projectService
+                serviceImplementation="com.github.israelermel.iridio77.persistancestate.fileproperties.FilePropertiesPersistanceState"/>
+        <projectService
+                serviceImplementation="com.github.israelermel.iridio77.persistancestate.FontSizePersistanceState"/>
+        <projectService
+                serviceImplementation="com.github.israelermel.iridio77.persistancestate.ScreenDensityPersistanceState"/>
 
-        <projectService serviceImplementation="com.github.israelermel.iridio77.persistancestate.DisplayDaltonizerPersistanceState"/>
+        <projectService
+                serviceImplementation="com.github.israelermel.iridio77.persistancestate.DisplayDaltonizerPersistanceState"/>
 
         <notificationGroup id="Custom Notification Group" displayType="BALLOON"/>
         <notificationGroup id="Custom Notification Group Error" displayType="BALLOON"/>
@@ -80,14 +84,20 @@
 
         <action id="ChangeToDefaultConfigurationActionId"
                 class="com.github.israelermel.iridio77.actions.ChangeResetConfigurationAction"
-                text="_Default Configuration"
-                description="Default configuration">
+                text="_Reset Settings to Default"
+                description="Reset settings to default">
         </action>
 
         <action id="ToogleScreenTouchesActionId"
                 class="com.github.israelermel.iridio77.actions.ToogleScreenTouchesAction"
                 text="_Enable/Disable Screen Touches"
                 description="Enable/Disable Screen touches">
+        </action>
+
+        <action id="AdbRemoveAppsActionId"
+                class="com.github.israelermel.iridio77.actions.AdbSearchRemovePackagesAction"
+                text="_Remove Packages(Apps)"
+                description="Remove packages(Apps)">
         </action>
 
         <!--        TOPMENU GROUP  -->
@@ -115,6 +125,8 @@
             <separator/>
             <reference ref="ToogleAnimationsActionId"/>
             <reference ref="ToogleScreenTouchesActionId"/>
+            <separator/>
+            <reference ref="AdbRemoveAppsActionId"/>
         </group>
 
         <group

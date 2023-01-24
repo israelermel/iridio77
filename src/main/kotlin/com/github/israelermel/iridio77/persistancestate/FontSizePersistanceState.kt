@@ -1,6 +1,6 @@
 package com.github.israelermel.iridio77.persistancestate
 
-import com.github.israelermel.iridio77.ui.models.FontSizeCommand
+import com.github.israelermel.iridio77.ui.models.command.FontSizeCommand
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.State
