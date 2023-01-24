@@ -24,7 +24,7 @@ class DisplayDaltonizerForm(
         ComboBox<DisplayDaltonizerCommand>().apply {
             name = "displayDaltonizerCombo"
             title = IridioBundle.getMessage(
-                "titleDialogPanelChoose",
+                "msg.adb.tile.dialog.panel.choose",
                 IridioBundle.getMessage("title.dialog.display.daltonizer")
             )
         }

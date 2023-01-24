@@ -1,4 +1,4 @@
-package com.github.israelermel.iridio77.utils
+package com.github.israelermel.iridio77.receivers
 
 import com.android.ddmlib.MultiLineReceiver
 

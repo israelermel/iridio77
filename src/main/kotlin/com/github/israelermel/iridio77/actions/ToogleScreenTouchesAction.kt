@@ -1,14 +1,11 @@
 package com.github.israelermel.iridio77.actions
 
-import com.github.israelermel.iridio77.models.AndroidDebugEvent
-import com.github.israelermel.iridio77.impl.AndroidDebugBridgeManager
-import com.intellij.openapi.actionSystem.AnAction
-import com.intellij.openapi.actionSystem.AnActionEvent
+import com.github.israelermel.iridio77.events.AdbScreenTouchesEvent
+import com.github.israelermel.iridio77.impl.SingleActionCommand
+import com.github.israelermel.iridio77.utils.IridioNotification
+import com.intellij.openapi.project.Project
 
-class ToogleScreenTouchesAction : AnAction() {
-    override fun actionPerformed(event: AnActionEvent) {
-        event.project?.let {
-            AndroidDebugBridgeManager(it).onDebugEventTriggered(AndroidDebugEvent.TOOGLE_SCREEN_TOUCHES)
-        }
-    }
+class ToogleScreenTouchesAction : SingleActionCommand() {
+    override fun adbCommandEvent(project: Project, notification: IridioNotification) =
+        AdbScreenTouchesEvent(project, notification)
 }

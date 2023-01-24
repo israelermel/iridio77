@@ -1,4 +1,4 @@
-package com.github.israelermel.iridio77.models
+package com.github.israelermel.iridio77.events
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver
@@ -8,9 +8,9 @@ import com.github.israelermel.iridio77.utils.IridioMessage
 import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
 
-class AdbTalkback(val project: Project, val notification: IridioNotification) {
+class AdbTalkbackEvent(val project: Project, val notification: IridioNotification) : AdbActionEvent {
 
-    fun execute(device: IDevice) {
+    override fun execute(device: IDevice) {
         try {
             device.executeShellCommand("settings get secure accessibility_enabled",
                 SingleLineAdbReceiver { firstLine ->
@@ -32,7 +32,7 @@ class AdbTalkback(val project: Project, val notification: IridioNotification) {
     companion object {
         const val DEFAULT_CONFIGURATION =
             "settings put secure enabled_accessibility_services com.android.talkback/com.google.android.marvin.talkback.TalkBackService"
-        const val MSG_ADB_TALKBACK = "msgAdbTalkback"
+        const val MSG_ADB_TALKBACK = "msg.adb.label.talkback"
         const val ENABLE_TALKBACK =
             "settings put secure enabled_accessibility_services com.google.android.marvin.talkback/com.google.android.marvin.talkback.TalkBackService"
 

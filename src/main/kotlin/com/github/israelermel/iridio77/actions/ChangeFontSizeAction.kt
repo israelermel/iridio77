@@ -1,24 +1,17 @@
 package com.github.israelermel.iridio77.actions
 
+import com.github.israelermel.iridio77.events.AdbFontSizeEvent
+import com.github.israelermel.iridio77.impl.FormActionCommand
 import com.github.israelermel.iridio77.ui.FontSizeForm
 import com.github.israelermel.iridio77.ui.models.Command
-import com.github.israelermel.iridio77.impl.AndroidDebugBridgeManager
-import com.intellij.openapi.actionSystem.AnAction
-import com.intellij.openapi.actionSystem.AnActionEvent
+import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
 
-class ChangeFontSizeAction : AnAction() {
+class ChangeFontSizeAction : FormActionCommand() {
+    override fun adbCommandEvent(project: Project, command: IridioNotification) =
+        AdbFontSizeEvent(project, command)
 
-    override fun actionPerformed(event: AnActionEvent) {
-        event.project?.let { project ->
-            FontSizeForm(project) { changeFontSize(project, it) }
-        }?.also {
-            it.show()
-        }
-    }
-
-    private fun changeFontSize(project: Project, command: Command) {
-        AndroidDebugBridgeManager(project).changeFontSize(command)
-    }
+    override fun adbForm(project: Project, listener: (Command) -> Unit) =
+        FontSizeForm(project, listener)
 
 }

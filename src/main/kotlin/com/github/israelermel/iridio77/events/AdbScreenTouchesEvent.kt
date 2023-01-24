@@ -1,4 +1,4 @@
-package com.github.israelermel.iridio77.models
+package com.github.israelermel.iridio77.events
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver
@@ -8,9 +8,9 @@ import com.github.israelermel.iridio77.utils.IridioMessage
 import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
 
-class AdbScreenTouches(val project: Project, val notification: IridioNotification) {
+class AdbScreenTouchesEvent(val project: Project, val notification: IridioNotification) : AdbActionEvent {
 
-    fun execute(device: IDevice) {
+    override fun execute(device: IDevice) {
         try {
             device.executeShellCommand("settings get system show_touches",
                 SingleLineAdbReceiver { firstLine ->
@@ -28,7 +28,7 @@ class AdbScreenTouches(val project: Project, val notification: IridioNotificatio
                     )
                 })
         } catch (ex: Exception) {
-            notification.showAdbNotificationError(AdbOverdraw.MSG_ADB_OVERDRAW)
+            notification.showAdbNotificationError(AdbOverdrawEvent.MSG_ADB_OVERDRAW)
         }
     }
 

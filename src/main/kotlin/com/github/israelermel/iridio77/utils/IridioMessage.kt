@@ -8,23 +8,33 @@ object IridioMessage {
         val msgProperty = getMessageResource(property)
 
         return IridioBundle.message(
-            "msgAdbProperty",
+            "msg.adb.property",
             msgProperty,
             getLabelFromBoolean(isEnabled)
+        )
+    }
+
+    fun getAdbPropertyMessage(property: String): String {
+        val msgProperty = getMessageResource(property)
+
+        return IridioBundle.message(
+            "msg.adb.single.property",
+            msgProperty
         )
     }
 
     fun getMessageResource(property: String): String {
         return IridioBundle.message(property)
     }
+
     fun getLabelFromBoolean(status: Boolean) =
-        if (status) getMessageResource("msgEnabled") else getMessageResource("msgDisabled")
+        if (status) getMessageResource("msg.adb.enabled") else getMessageResource("msg.adb.disabled")
 
     fun getAdbChangePropertyMessage(property: String, value: String): String {
         val msgProperty = getMessageResource(property)
 
         return IridioBundle.message(
-            "msgAdbChangeProperty",
+            "msg.adb.change.property",
             msgProperty,
             value
         )
@@ -33,7 +43,7 @@ object IridioMessage {
     fun getErrorMessage(property: String): String {
         val msgProperty = getMessageResource(property)
         return IridioBundle.message(
-            "msgErrorChangeProperty",
+            "msg.adb.error.change.property",
             msgProperty
         )
     }

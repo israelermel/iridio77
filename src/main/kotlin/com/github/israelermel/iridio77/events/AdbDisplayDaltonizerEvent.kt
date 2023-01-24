@@ -1,4 +1,4 @@
-package com.github.israelermel.iridio77.models
+package com.github.israelermel.iridio77.events
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver
@@ -7,12 +7,12 @@ import com.github.israelermel.iridio77.utils.IridioMessage
 import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
 
-class AdbDisplayDaltonizer(
+class AdbDisplayDaltonizerEvent(
     val project: Project,
     val notification: IridioNotification
-) {
+) : AdbFormActionEvent {
 
-    fun execute(device: IDevice, command: Command) {
+    override fun execute(device: IDevice, command: Command) {
         try {
 
             IridioMessage.getAdbChangePropertyMessage(MSG_ADB_DISPLAY_DALTONIZER, command.getLabel()).also {

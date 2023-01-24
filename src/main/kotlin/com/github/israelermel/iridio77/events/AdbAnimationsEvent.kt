@@ -1,4 +1,4 @@
-package com.github.israelermel.iridio77.models
+package com.github.israelermel.iridio77.events
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.NullOutputReceiver
@@ -8,9 +8,9 @@ import com.github.israelermel.iridio77.utils.IridioMessage
 import com.github.israelermel.iridio77.utils.IridioNotification
 import com.intellij.openapi.project.Project
 
-class AdbAnimations(val project: Project, val notification: IridioNotification) {
+class AdbAnimationsEvent(val project: Project, val notification: IridioNotification) : AdbActionEvent {
 
-    fun execute(device: IDevice) {
+    override fun execute(device: IDevice) {
         try {
             device.executeShellCommand("settings get global window_animation_scale",
                 SingleLineAdbReceiver { firstLine ->
@@ -31,7 +31,7 @@ class AdbAnimations(val project: Project, val notification: IridioNotification) 
     }
 
     companion object {
-        const val MSG_ADB_ANIMATIONS = "msgAdbAnimations"
+        const val MSG_ADB_ANIMATIONS = "msg.adb.label.animations"
         const val ENABLE_ANIMATIONS =
             "settings put global window_animation_scale 0.0 ; settings put global animator_duration_scale 0.0 ; settings put global transition_animation_scale 0.0"
         const val DEFAULT_CONFIGURATION =
