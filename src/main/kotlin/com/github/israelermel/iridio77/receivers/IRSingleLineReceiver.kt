@@ -2,7 +2,7 @@ package com.github.israelermel.iridio77.receivers
 
 import com.android.ddmlib.MultiLineReceiver
 
-class SingleLineLayoutSizeReceiver(
+class IRSingleLineReceiver(
     private val processFirstLine: (response: String) -> Unit
 ) : MultiLineReceiver() {
     private var cancelled = false

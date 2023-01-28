@@ -1,8 +1,8 @@
 package com.github.israelermel.iridio77.settings
 
 import com.github.israelermel.iridio77.IridioBundle
-import com.github.israelermel.iridio77.events.FilePropertiesState
-import com.github.israelermel.iridio77.persistancestate.FilePropertiesPersistanceState
+import com.github.israelermel.iridio77.persistancestate.fileproperties.FilePropertiesState
+import com.github.israelermel.iridio77.persistancestate.fileproperties.FilePropertiesPersistanceState
 import com.github.israelermel.iridio77.utils.IRFileUtils
 import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.project.Project

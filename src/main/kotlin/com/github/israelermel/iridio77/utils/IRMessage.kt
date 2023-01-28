@@ -2,7 +2,11 @@ package com.github.israelermel.iridio77.utils
 
 import com.github.israelermel.iridio77.IridioBundle
 
-object IridioMessage {
+object IRMessage {
+
+    fun getMessageResourceWithDescription(property: String, desc:String) :String {
+        return "${getMessageResource(property)}\n $desc"
+    }
 
     fun getAdbPropertyMessageFromBoolean(property: String, isEnabled: Boolean): String {
         val msgProperty = getMessageResource(property)

@@ -1,4 +1,4 @@
-package com.github.israelermel.iridio77.events
+package com.github.israelermel.iridio77.persistancestate.fileproperties
 
 data class FilePropertiesState(
     var keyBuildType: String = "BUILD_TYPE",

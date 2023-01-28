@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+## [0.0.7] - 2023-01-25
+
+### Added
+
+- Remove packages(Apps)
+
 ## [0.0.6] - 2023-01-20
 
 ### Added
