@@ -1,16 +1,18 @@
 package com.github.israelermel.iridio77.ui
 
 import com.github.israelermel.iridio77.IridioBundle
-import com.github.israelermel.iridio77.services.DisplayDaltonizerService
-import com.github.israelermel.iridio77.ui.models.Command
-import com.github.israelermel.iridio77.ui.models.DisplayDaltonizerCommand
+import com.github.israelermel.iridio77.persistancestate.DisplayDaltonizerPersistanceState
+import com.github.israelermel.iridio77.ui.models.command.Command
+import com.github.israelermel.iridio77.ui.models.command.DisplayDaltonizerCommand
+import com.github.israelermel.iridio77.ui.models.command.DisplayDaltonizerState
+import com.github.israelermel.iridio77.utils.IRDimension
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.util.ui.FormBuilder
 import org.jetbrains.kotlin.utils.addToStdlib.ifTrue
-import java.awt.Dimension
 import javax.swing.JComponent
+import javax.swing.JPanel
 
 class DisplayDaltonizerForm(
     private val project: Project,
@@ -24,17 +26,18 @@ class DisplayDaltonizerForm(
         ComboBox<DisplayDaltonizerCommand>().apply {
             name = "displayDaltonizerCombo"
             title = IridioBundle.getMessage(
-                "titleDialogPanelChoose",
+                "msg.adb.tile.dialog.panel.choose",
                 IridioBundle.getMessage("title.dialog.display.daltonizer")
             )
+            alignmentX = JComponent.CENTER_ALIGNMENT
         }
 
     private val displayDaltonizerList = arrayOf(
-        DisplayDaltonizerCommand(code = -1, "Disabled Daltonizer"),
-        DisplayDaltonizerCommand(code = 0, "Monochromatic"),
-        DisplayDaltonizerCommand(code = 11, "Protanomaly"),
-        DisplayDaltonizerCommand(code = 12, "Deuteranomaly"),
-        DisplayDaltonizerCommand(code = 13, "Tritanomaly")
+        DisplayDaltonizerCommand(state = DisplayDaltonizerState.DISABLED),
+        DisplayDaltonizerCommand(state = DisplayDaltonizerState.MONOCHROMATIC),
+        DisplayDaltonizerCommand(state = DisplayDaltonizerState.PROTANOMALY),
+        DisplayDaltonizerCommand(state = DisplayDaltonizerState.DEUTERANOMALY),
+        DisplayDaltonizerCommand(state = DisplayDaltonizerState.TRITANOMALY)
     )
 
     init {
@@ -43,7 +46,7 @@ class DisplayDaltonizerForm(
 
     override fun doOKAction() {
         listener.invoke(selectDisplayDaltonizer)
-        DisplayDaltonizerService.getInstance(project).loadState(selectDisplayDaltonizer)
+        DisplayDaltonizerPersistanceState.getInstance(project).loadState(selectDisplayDaltonizer)
         super.doOKAction()
     }
 
@@ -51,17 +54,18 @@ class DisplayDaltonizerForm(
         setupComboBox()
 
         val title = IridioBundle.getMessage("title.display.daltonizer")
+        val buttonOkText = IridioBundle.getMessage("label.button.change")
 
         return FormBuilder.createFormBuilder()
-            .addLabeledComponent(title, displayDaltonizerCombo)
+            .addLabeledComponent(title, displayDaltonizerCombo, IRDimension.Spacing.M, false)
+            .addComponentFillVertically(JPanel(), IRDimension.Spacing.S)
             .panel.apply {
-                minimumSize = Dimension(400, 100)
-                preferredSize = Dimension(400, 100)
+                setOKButtonText(buttonOkText)
             }
     }
 
     private fun setupComboBox() {
-        state = DisplayDaltonizerService.getInstance(project).state
+        state = DisplayDaltonizerPersistanceState.getInstance(project).state
 
         with(displayDaltonizerList) {
             map { displayDaltonizerCombo.addItem(it) }
@@ -81,5 +85,4 @@ class DisplayDaltonizerForm(
             }
         }
     }
-
 }

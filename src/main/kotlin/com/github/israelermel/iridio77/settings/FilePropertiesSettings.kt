@@ -1,8 +1,8 @@
 package com.github.israelermel.iridio77.settings
 
 import com.github.israelermel.iridio77.IridioBundle
-import com.github.israelermel.iridio77.models.FilePropertiesState
-import com.github.israelermel.iridio77.services.FilePropertiesService
+import com.github.israelermel.iridio77.persistancestate.fileproperties.FilePropertiesState
+import com.github.israelermel.iridio77.persistancestate.fileproperties.FilePropertiesPersistanceState
 import com.github.israelermel.iridio77.utils.IRFileUtils
 import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.project.Project
@@ -16,7 +16,7 @@ class FilePropertiesSettings(private val project: Project) : Configurable, Docum
 
     private var modified = false
 
-    private val state: FilePropertiesState by lazy { FilePropertiesService.getInstance(project).state }
+    private val state: FilePropertiesState by lazy { FilePropertiesPersistanceState.getInstance(project).state }
 
     private lateinit var keyBuildType: JTextField
     private lateinit var valueBuildType: JTextField
@@ -57,7 +57,7 @@ class FilePropertiesSettings(private val project: Project) : Configurable, Docum
         state.keySampleBuildFlavor = keySampleBuildFlavor.text
         state.valueSampleBuildFlavor = valueSampleBuildFlavor.text
 
-        FilePropertiesService.getInstance(project).loadState(state)
+        FilePropertiesPersistanceState.getInstance(project).loadState(state)
 
         val filePath = "${project.basePath}/local.properties"
         IRFileUtils.addProperty(filePath, state.keyBuildType, state.valueBuildType)

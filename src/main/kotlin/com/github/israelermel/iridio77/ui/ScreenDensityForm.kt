@@ -1,43 +1,43 @@
 package com.github.israelermel.iridio77.ui
 
 import com.github.israelermel.iridio77.IridioBundle
-import com.github.israelermel.iridio77.adb.AdbScreenDensity
-import com.github.israelermel.iridio77.services.LayoutSizeService
-import com.github.israelermel.iridio77.ui.models.LayoutSizes
-import com.github.israelermel.iridio77.utils.IridioNotification
+import com.github.israelermel.iridio77.events.AdbScreenDensityEvent
+import com.github.israelermel.iridio77.persistancestate.ScreenDensityPersistanceState
+import com.github.israelermel.iridio77.ui.models.command.DensityCommand
+import com.github.israelermel.iridio77.ui.models.command.DensityState
+import com.github.israelermel.iridio77.utils.IRNotification
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.util.ui.FormBuilder
 import org.jetbrains.kotlin.utils.addToStdlib.ifTrue
-import java.awt.Dimension
 import javax.swing.JComponent
 
 
 class ScreenDensityForm(
     private val project: Project,
-    private val listener: (LayoutSizes) -> Unit
+    private val listener: (DensityCommand) -> Unit
 ) : DialogWrapper(project) {
 
-    private lateinit var state: LayoutSizes
-    private lateinit var selectedLayoutSizes: LayoutSizes
+    private lateinit var state: DensityCommand
+    private lateinit var selectedDensity: DensityCommand
 
-    private val notification by lazy { IridioNotification(project) }
-    private val adbScreenDensity by lazy { AdbScreenDensity(project, notification) }
+    private val notification by lazy { IRNotification(project) }
+    private val adbScreenDensity by lazy { AdbScreenDensityEvent(project, notification) }
 
-    private var densityCombo: ComboBox<LayoutSizes> = ComboBox<LayoutSizes>().apply {
+    private var densityCombo: ComboBox<DensityCommand> = ComboBox<DensityCommand>().apply {
         name = "densityCombo"
         title = IridioBundle.getMessage(
-            "titleDialogPanelChoose",
-            IridioBundle.getMessage("titleDensity")
+            "msg.adb.tile.dialog.panel.choose",
+            IridioBundle.getMessage("msg.adb.title.density")
         )
     }
 
     private val densities = mutableListOf(
-        LayoutSizes(label = "hdpi - 240dpi", size = (240 * 1.1).toInt(), index = 1),
-        LayoutSizes(label = "xhdpi - 320dpi", size = (320 * 1.1).toInt(), index = 2),
-        LayoutSizes(label = "xxhdpi - 480dpi", size = (480 * 1.1).toInt(), index = 3),
-        LayoutSizes(label = "xxxhdpi - 640dpi", size = (640 * 1.1).toInt(), index = 4)
+        DensityCommand(state = DensityState.HDPI),
+        DensityCommand(state = DensityState.XHDPI),
+        DensityCommand(state = DensityState.XXHDPI),
+        DensityCommand(state = DensityState.XXXHDPI)
     )
 
     init {
@@ -45,37 +45,39 @@ class ScreenDensityForm(
     }
 
     override fun doOKAction() {
-        listener.invoke(selectedLayoutSizes)
-        LayoutSizeService.getInstance(project).loadState(selectedLayoutSizes)
+        listener.invoke(selectedDensity)
+        ScreenDensityPersistanceState.getInstance(project).loadState(selectedDensity)
         super.doOKAction()
     }
 
     override fun createCenterPanel(): JComponent {
         setupComboBox()
 
-        val title = IridioBundle.getMessage("titleDensity")
+        val title = IridioBundle.getMessage("msg.adb.label.density")
+        val buttonOkText = IridioBundle.getMessage("label.button.change")
 
         return FormBuilder.createFormBuilder()
             .addLabeledComponent(title, densityCombo)
             .panel.apply {
-                minimumSize = Dimension(400, 100)
-                preferredSize = Dimension(400, 100)
+                setOKButtonText(buttonOkText)
             }
     }
 
     private fun setupComboBox() {
-        state = LayoutSizeService.getInstance(project).state
+        state = ScreenDensityPersistanceState.getInstance(project).state
 
-        adbScreenDensity.getDefaultDensity()?.let {
-            val first = LayoutSizes(label = "Default Density - ${it}dpi", size = it, index = 0)
-            densities.add(0, first)
+        adbScreenDensity.getDefaultDensity()?.let { defaultDensity ->
+            DensityCommand(label = "Default Density - ${defaultDensity}dpi", density = defaultDensity).also {
+                densities.add(0, it)
+            }
+
         }
 
         with(densities) {
             map { densityCombo.addItem(it) }
 
             isNotEmpty().ifTrue {
-                if (state.label.isNullOrEmpty()) {
+                if (state.getLabel().isEmpty()) {
                     densityCombo.selectedIndex = 0
                 } else {
                     densityCombo.selectedIndex = densities.indexOf(state)
@@ -84,9 +86,9 @@ class ScreenDensityForm(
         }
 
         densityCombo.addActionListener {
-            val density = densityCombo.selectedItem as? LayoutSizes?
+            val density = densityCombo.selectedItem as? DensityCommand?
             density?.let {
-                selectedLayoutSizes = it
+                selectedDensity = it
             }
         }
     }
