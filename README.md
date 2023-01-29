@@ -1,8 +1,8 @@
 # Iridio77
 
 ![Build](https://github.com/israelermel/iridio77/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://img.shields.io/jetbrains/plugin/v/br.com.vineivel.Iridio77)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://img.shields.io/jetbrains/plugin/d/br.com.vineivel.Iridio77)
+[![Version](https://img.shields.io/jetbrains/plugin/v/br.com.vineivel.Iridio77.svg)](https://img.shields.io/jetbrains/plugin/v/br.com.vineivel.Iridio77)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/br.com.vineivel.Iridio77.svg)](https://img.shields.io/jetbrains/plugin/d/br.com.vineivel.Iridio77)
 
 ## Description
 
