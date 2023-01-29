@@ -155,7 +155,7 @@ class RemoveAppsForm(
 
     fun updateTable(list: List<PackagesModel>) {
         updateTableData(list, true)
-        isOKActionEnabled = true
+        isOKActionEnabled = list.isNotEmpty()
         searchButton.isEnabled = true
     }
 

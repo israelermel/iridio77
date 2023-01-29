@@ -38,9 +38,12 @@ class AdbSearchRemovePackagesEvent(
                 notification.adbNotification(it)
             }
 
-            device.executeShellCommand(
-                "pm uninstall --user 0 ${command.getCommand().lowercase()}", NullOutputReceiver()
-            )
+            command.getCommand().split(";").forEach {
+                device.executeShellCommand(
+                    "pm uninstall --user 0 $it", NullOutputReceiver()
+                )
+            }
+
         } catch (ex: Exception) {
             notification.showAdbNotificationError(MSG_SEARCH_REMOVE_PACKAGES)
         }
