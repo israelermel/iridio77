@@ -7,7 +7,6 @@
 ## [0.0.7] - 2023-01-25
 
 ### Added
-
 - Remove packages(Apps)
 
 ### Delete
@@ -16,7 +15,6 @@
 ## [0.0.6] - 2023-01-20
 
 ### Added
-
 - Reset to default configurations <kbd>Iridio77</kbd> > <kbd>Default Configuration</kbd>
 - Show Screen Touches <kbd>Iridio77</kbd> > <kbd>Accessibility</kbd> > <kbd>Enable/Disable Touches on Screen </kbd>
 - Display daltonizer  <kbd>Iridio77</kbd> > <kbd>Accessibility</kbd> > <kbd>Display Daltonism</kbd>
@@ -25,13 +23,11 @@
 ## [0.0.5] - 2023-01-18
 
 ### Added
-
 - changed plugin language to English
 
 ## [0.0.4] - 2023-01-18
 
 ### Added
-
 - This is the first version containing commands to change Emulator/Physical Device settings such as:
 - Activate and deactivate TalkBack
 - Change Density
@@ -39,6 +35,8 @@
 - Activate and deactivate Layout Bounds, Profile, Overdraw and Animations
 - Add custom attributes in local.properties via Preferences
 
-[Unreleased]: https://github.com/israelermel/iridio77/compare/v0.0.4...HEAD
-
+[Unreleased]: https://github.com/israelermel/iridio77/compare/v0.0.7...HEAD
+[0.0.7]: https://github.com/israelermel/iridio77/compare/v0.0.6...v0.0.7
+[0.0.6]: https://github.com/israelermel/iridio77/compare/v0.0.5...v0.0.6
+[0.0.5]: https://github.com/israelermel/iridio77/compare/v0.0.4...v0.0.5
 [0.0.4]: https://github.com/israelermel/iridio77/commits/v0.0.4
