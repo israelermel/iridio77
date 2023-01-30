@@ -1,23 +1,24 @@
 # Iridio77
 
 ![Build](https://github.com/israelermel/iridio77/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://img.shields.io/jetbrains/plugin/v/br.com.vineivel.Iridio77)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://img.shields.io/jetbrains/plugin/d/br.com.vineivel.Iridio77)
+[![Version](https://img.shields.io/jetbrains/plugin/v/br.com.vineivel.Iridio77.svg)](https://img.shields.io/jetbrains/plugin/v/br.com.vineivel.Iridio77)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/br.com.vineivel.Iridio77.svg)](https://img.shields.io/jetbrains/plugin/d/br.com.vineivel.Iridio77)
 
 ## Description
 
 <!-- Plugin description -->
-`Iridio77` is a plugin that can help developers to be more productive by 
-providing additional functionality related to ADB commands. 
-The plugin allows developers to manipulate properties on the file `local.properties`,
-and offers other options to automate some tasks and save time
+`Iridio77` is a plugin that can help developers to be more productive by
+providing additional functionality related to ADB commands and
+offers other options to automate some tasks and save time
 
 ### Accessibility
+
 - Enable/Disable TalkBack
 - Change Display daltonizer
 - Enable/Disable Color Inversion
 
 ### Developer Options
+
 - Change Density
 - Change Font Size
 - Enable/Disable Layout Bounds
@@ -27,9 +28,6 @@ and offers other options to automate some tasks and save time
 - Enable/Disable Screen Touches
 - Remove packages(Apps)
 - Reset to default configurations
-
-### Settings
-- Add custom attributes in local.properties via <kbd>Settings</kbd> > <kbd>Iridio Settings</kbd>
 
 <!-- Plugin description end -->
 
