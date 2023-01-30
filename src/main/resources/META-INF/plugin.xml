@@ -12,9 +12,6 @@
     <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <projectConfigurable instance="com.github.israelermel.iridio77.settings.FilePropertiesSettings"/>
-        <projectService
-                serviceImplementation="com.github.israelermel.iridio77.persistancestate.fileproperties.FilePropertiesPersistanceState"/>
         <projectService
                 serviceImplementation="com.github.israelermel.iridio77.persistancestate.FontSizePersistanceState"/>
         <projectService

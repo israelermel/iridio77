@@ -10,6 +10,9 @@
 
 - Remove packages(Apps)
 
+### Delete
+- Add custom attributes in local.properties
+
 ## [0.0.6] - 2023-01-20
 
 ### Added

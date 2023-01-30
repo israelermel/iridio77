@@ -5,12 +5,14 @@ import com.github.israelermel.iridio77.persistancestate.FontSizePersistanceState
 import com.github.israelermel.iridio77.ui.models.command.Command
 import com.github.israelermel.iridio77.ui.models.command.FontSizeCommand
 import com.github.israelermel.iridio77.ui.models.command.FontSizeState
+import com.github.israelermel.iridio77.utils.IRDimension
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.util.ui.FormBuilder
 import org.jetbrains.kotlin.utils.addToStdlib.ifTrue
 import javax.swing.JComponent
+import javax.swing.JPanel
 
 class FontSizeForm(
     private val project: Project,
@@ -76,6 +78,7 @@ class FontSizeForm(
 
         return FormBuilder.createFormBuilder()
             .addLabeledComponent(title, fontSizeCombo)
+            .addComponentFillVertically(JPanel(), IRDimension.Spacing.S)
             .panel.apply {
                 setOKButtonText(buttonOkText)
             }
