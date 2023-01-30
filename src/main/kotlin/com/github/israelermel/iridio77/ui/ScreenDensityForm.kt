@@ -5,6 +5,7 @@ import com.github.israelermel.iridio77.events.AdbScreenDensityEvent
 import com.github.israelermel.iridio77.persistancestate.ScreenDensityPersistanceState
 import com.github.israelermel.iridio77.ui.models.command.DensityCommand
 import com.github.israelermel.iridio77.ui.models.command.DensityState
+import com.github.israelermel.iridio77.utils.IRDimension
 import com.github.israelermel.iridio77.utils.IRNotification
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
@@ -12,6 +13,7 @@ import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.util.ui.FormBuilder
 import org.jetbrains.kotlin.utils.addToStdlib.ifTrue
 import javax.swing.JComponent
+import javax.swing.JPanel
 
 
 class ScreenDensityForm(
@@ -58,6 +60,7 @@ class ScreenDensityForm(
 
         return FormBuilder.createFormBuilder()
             .addLabeledComponent(title, densityCombo)
+            .addComponentFillVertically(JPanel(), IRDimension.Spacing.S)
             .panel.apply {
                 setOKButtonText(buttonOkText)
             }
