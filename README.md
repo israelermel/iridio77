@@ -14,7 +14,7 @@ offers other options to automate some tasks and save time
 ### Accessibility
 
 - Enable/Disable TalkBack
-- Change Display daltonizer
+- Change Color Space
 - Enable/Disable Color Inversion
 
 ### Developer Options
@@ -27,7 +27,7 @@ offers other options to automate some tasks and save time
 - Enable/Disable Animations
 - Enable/Disable Screen Touches
 - Remove packages(Apps)
-- Reset to default configurations
+- Reset Settings to Default
 
 <!-- Plugin description end -->
 

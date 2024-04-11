@@ -27,7 +27,7 @@ data class DisplayDaltonizerCommand(
 }
 
 enum class DisplayDaltonizerState(val label: String, val value: Int) {
-    DISABLED("Disabled Daltonizer", -1),
+    DISABLED("Color Space Default", -1),
     MONOCHROMATIC("Monochromatic", 0),
     PROTANOMALY("Protanomaly", 11),
     DEUTERANOMALY("Deuteranomaly", 12),

@@ -33,8 +33,8 @@
         </action>
         <action id="ChangeDisplayDaltonizerActionId"
                 class="com.github.israelermel.iridio77.actions.ChangeDisplayDaltonizerAction"
-                text="_Change Display Daltonizer"
-                description="Change Display daltonizer">
+                text="_Change Color Space"
+                description="Change color space">
         </action>
         <action id="ToogleColorInversionActionId"
                 class="com.github.israelermel.iridio77.actions.ToogleColorInversionAction"
